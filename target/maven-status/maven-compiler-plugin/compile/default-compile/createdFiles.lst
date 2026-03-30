@@ -1,6 +1,0 @@
-com\safeguardsa\ServletInitializer.class
-com\safeguardsa\config\EmailConfig.class
-com\safeguardsa\controllers\ExitController.class
-com\safeguardsa\SafeguardSaApplication.class
-com\safeguardsa\config\SecurityConfig.class
-com\safeguardsa\controllers\HomeController.class
