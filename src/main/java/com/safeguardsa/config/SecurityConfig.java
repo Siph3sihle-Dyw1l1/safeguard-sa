@@ -16,20 +16,26 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
-                // 1. Allow the Home and Exit paths explicitly
-                .requestMatchers("/", "/index", "/exit").permitAll()
-                // 2. Allow your specific folder structure
-                .requestMatchers(new AntPathRequestMatcher("/static/**")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
-                // 3. Keep everything else locked
+                // 1. THE ASSETS: Allow the CSS/Images/Favicons first (Stops the 403)
+                .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
+                
+                // 2. THE PUBLIC ROUTES: Explicitly permit these paths (Stops the Redirect Loop)
+                .requestMatchers("/", "/index", "/map", "/chat", "/exit", "/login").permitAll()
+                
+                // 3. THE SECURE ZONE: Everything else (Dashboard, Admin) needs login
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .defaultSuccessUrl("/", true) // Force it to go home after login
-                .permitAll()
+                .loginPage("/login")        // Points to your custom login URL
+                .loginProcessingUrl("/login") // Matches the form action
+                .defaultSuccessUrl("/", true)
+                .permitAll()               // CRITICAL: Allows the login page to be seen by the public
             )
-            .logout(logout -> logout.permitAll());
+            .logout(logout -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .permitAll()
+            );
 
         return http.build();
     }

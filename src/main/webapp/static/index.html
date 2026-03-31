@@ -1,15 +1,278 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SafeGuard SA — Student Safety</title>
+  <meta name="description" content="Official student safety platform for South African universities. Quick access to emergency services, safety maps, and AI-powered medical assistance." />
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="/static/images/favicon_io/site.webmanifest">
+  <link rel="shortcut icon" href="/static/images/favicon_io/favicon.ico">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/static/css/style_for_index.css" />
+</head>
+<body>
+
+  <!-- Dark-mode cyber grid background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ======================== HEADER ======================== -->
+  <header>
+    <div class="emergency-bar">
+      <!-- Animated scan line (dark mode) -->
+      <div class="emergency-bar__scan" aria-hidden="true"></div>
+
+      <div class="emergency-bar__inner">
+
+        <!-- Quick Exit -->
+        <button
+          id="quickExitBtn"
+          class="btn-exit"
+          aria-label="Quick exit — leave this site immediately (Press ESC)"
+          title="Press ESC to exit"
+        >
+          <!-- Power icon -->
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <span>Exit</span>
+        </button>
+
+        <!-- Emergency Numbers -->
+        <div class="emergency-numbers">
+          <span style="display:flex;align-items:center;gap:0.375rem;">
+            <svg class="emergency-icon animate-pulse" fill="none" stroke="currentColor" 
+                 viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+            <span class="emergency-label">EMERGENCY:</span>
+          </span>
+
+          <a href="tel:0860010111" class="emergency-link" aria-label="Call South African Police — 10111">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            10111 <span class="suffix">(SAPS)</span>
+          </a>
+
+          <span class="emergency-divider" aria-hidden="true">|</span>
+
+          <a href="tel:112" class="emergency-link" aria-label="Call general emergency — 112">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            112 <span class="suffix">(All)</span>
+          </a>
+        </div>
+
+        <!-- Spacer -->
+        <div style="width:4rem;" aria-hidden="true"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================== MAIN ======================== -->
+  <main>
+
+    <!-- ---- Hero Section ---- -->
+    <section class="hero">
+
+      <!-- Theme Toggle -->
+      <div class="theme-toggle-wrap">
+        <button
+          id="themeToggle"
+          class="theme-toggle"
+          aria-label="Toggle dark / light mode"
+        >
+          <!-- Track -->
+          <div class="toggle-track">
+            <div class="toggle-track__scan" aria-hidden="true"></div>
+            <div id="toggleKnob" class="toggle-knob">
+              <!-- Icon inside knob injected by JS -->
+            </div>
+          </div>
+          <!-- Label -->
+          <span id="toggleLabel" class="toggle-label">LIGHT</span>
+          <!-- Side icon -->
+          <div class="toggle-icon" id="toggleIcon" aria-hidden="true"></div>
+        </button>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="hero__inner">
+        <div class="hero__brand">
+          <!-- Shield -->
+          <div class="hero__shield">
+            <div class="hero__shield-scan" aria-hidden="true"></div>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h1 class="hero__title neon-text">SafeGuard SA</h1>
+        </div>
+
+        <p class="hero__desc">
+          Your trusted student safety companion. Quick access to emergency services,
+          campus safety resources, and medical assistance — all in one place.
+        </p>
+
+        <div class="hero__badge">
+          <div class="hero__dot" aria-hidden="true"></div>
+          <span class="hero__badge-text">Official University Safety Partner</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- Action Cards ---- -->
+    <section class="cards" aria-label="Main features">
+      <div class="cards__grid">
+
+        <!-- Safety Map -->
+        <a href="/map" class="card-link" aria-label="Open Safety Map">
+          <div class="glass-card card card--primary">
+            <div class="card__icon-wrap">
+              <div class="card__icon-scan" aria-hidden="true"></div>
+              <svg class="card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <h2 class="card__title">Safety Map</h2>
+            <p class="card__desc">
+              View real-time safety alerts, locate emergency services,
+              and find safe zones near your campus.
+            </p>
+            <div class="card__cta">
+              <span>Open Map</span>
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- AI Medic -->
+        <a href="/chat" class="card-link" aria-label="Open AI Medic chat">
+          <div class="glass-card card card--secondary">
+            <div class="card__icon-wrap">
+              <div class="card__icon-scan" style="animation-delay:1s;" aria-hidden="true"></div>
+              <svg class="card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </div>
+            <h2 class="card__title">AI Medic</h2>
+            <p class="card__desc">
+              Get instant first-aid guidance and medical advice
+              from our AI-powered health assistant.
+            </p>
+            <div class="card__cta">
+              <span>Start Chat</span>
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer>
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+        <span>SafeGuard SA</span>
+      </div>
+      <p class="footer__desc">
+        An official student safety initiative supported by South African universities
+        and the Department of Higher Education and Training.
+      </p>
+      <div class="footer__links">
+        <span>© <span id="currentYear"></span> SafeGuard SA</span>
+        <span class="footer__sep" aria-hidden="true">•</span>
+        <a href="/privacy">Privacy Policy</a>
+        <span class="footer__sep" aria-hidden="true">•</span>
+        <a href="/terms">Terms of Use</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================== SCRIPTS ======================== -->
+  <script>
+    /* ── Helpers ───────────────────────────────────────────── */
+    const SVG_SUN  = `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>`;
+    const SVG_MOON = `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>`;
+    const SVG_ZAP  = `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`;
+
+    const $knob  = document.getElementById('toggleKnob');
+    const $label = document.getElementById('toggleLabel');
+    const $icon  = document.getElementById('toggleIcon');
+
+    /* ── Theme ─────────────────────────────────────────────── */
+    let isDark = localStorage.getItem('safeguard-theme') === 'dark';
+
+    function applyTheme() {
+      document.documentElement.classList.toggle('dark', isDark);
+      document.body.classList.toggle('dark', isDark);
+
+      if (isDark) {
+        $knob.classList.add('is-dark');
+        $knob.innerHTML  = SVG_ZAP;
+        $label.textContent = 'CYBER';
+        $icon.innerHTML  = SVG_MOON;
+      } else {
+        $knob.classList.remove('is-dark');
+        $knob.innerHTML  = SVG_SUN;
+        $label.textContent = 'LIGHT';
+        $icon.innerHTML  = SVG_SUN;
+      }
+    }
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      isDark = !isDark;
+      localStorage.setItem('safeguard-theme', isDark ? 'dark' : 'light');
+      applyTheme();
+    });
+
+    /* ── Quick Exit ────────────────────────────────────────── */
+    function quickExit() {
+      window.location.replace('https://www.google.co.za');
+    }
+
+    document.getElementById('quickExitBtn').addEventListener('click', quickExit);
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') quickExit();
+    });
+
+    /* ── Footer year ───────────────────────────────────────── */
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    /* ── Init ──────────────────────────────────────────────── */
+    applyTheme();
+  </script>
+</body>
 </html>
