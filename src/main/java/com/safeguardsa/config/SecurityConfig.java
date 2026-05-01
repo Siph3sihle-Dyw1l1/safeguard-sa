@@ -36,7 +36,7 @@ public class SecurityConfig {
             .formLogin(form -> form
                 .loginPage("/login")      // Points to your custom login URL
                 .loginProcessingUrl("/login") // Matches the form action
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/admin/dashboard", true)
                 .failureUrl("/login?error=true")  // QA: easier to test failed login
                 .permitAll()               // CRITICAL: Allows the login page to be seen by the public
             )
