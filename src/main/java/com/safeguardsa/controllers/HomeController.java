@@ -10,33 +10,30 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "index";
+        return "index.html";
     }
 
-    @GetMapping("/dashboard")
-    public String dashboard() {
-        return "dashboard"; // Points to dashboard.html later
-    }
-
-    @GetMapping("/admin")
-    public String admin() {
-        return "admin"; // Points to admin.html later
-    }
-
+    //LOGIN — Spring Security posts to /login , this just serves the page
     @GetMapping("/login")
     public String login() {
-        return "login"; // This looks for login.html in your static folder
+        return "login.html"; // templates/login.html
     }
 
-    //I will remove this when Kb creates her SafetyMapController.java
+    // ADMIN TIPS — protected by SecurityConfig (.hasRole("ADMIN"))
+    @GetMapping("/admin/tips")
+    public String adminTips() {
+        return "admin-tips.html"; // templates/admin-tips.html
+    }
+
+    // TEMP: Remove this when Member C creates SafetyMapController.java
     @GetMapping("/map")
     public String mapTemp() {
-        return "placeholder";
+        return "placeholder.html"; // templates/placeholder.html
     }
 
-    //I will remove this when Kgomo creates her SafetyMapController.java
+    // TEMP: Remove this when Member B creates ChatController.java
     @GetMapping("/chat")
     public String chatTemp() {
-        return "placeholder";
+        return "placeholder.html"; // templates/placeholder.html
     }
 }
