@@ -1,0 +1,340 @@
+/* 
+    Created on : 01 May 2026, 13:48:37
+    Author     : S DYWILI
+    Purpose    : Login page styles — uses the same CSS variables
+                 and animations from style_for_index.css
+*/
+
+/* ── Login Section Layout ──────────────────────────────── */
+.login-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 12rem); /* account for header + footer */
+    padding: 2rem 1rem;
+}
+
+/* ── Login Card ────────────────────────────────────────── */
+/* Uses .glass-card from style_for_index.css for the same glassmorphism */
+.login-card {
+    width: 100%;
+    max-width: 26rem;
+    padding: 2rem;
+    animation: fadeInUp 0.7s ease both; /* same animation as index cards */
+}
+@media (min-width: 640px) {
+    .login-card {
+        padding: 2.5rem;
+    }
+}
+
+/* Neon glow on the card in dark mode — matches card--primary from index */
+.dark .login-card {
+    animation: card-glow 3s ease-in-out infinite;
+}
+
+/* ── Card Header ───────────────────────────────────────── */
+.login-card__header {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin-bottom: 1.75rem;
+}
+
+/* Shield icon — identical to .hero__shield on index */
+.login-shield {
+    position: relative;
+    flex-shrink: 0;
+    padding: 0.625rem;
+    border-radius: 0.75rem;
+    background-color: var(--primary);
+    overflow: hidden;
+}
+.dark .login-shield {
+    background: rgba(0,191,255,0.15);
+    border: 1px solid rgba(0,191,255,0.45);
+}
+.login-shield__scan {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0,191,255,0.4), transparent);
+    opacity: 0;
+}
+.dark .login-shield__scan {
+    opacity: 1;
+    animation: scan-line 3s ease-in-out infinite;
+}
+.login-shield svg {
+    width: 1.75rem;
+    height: 1.75rem;
+    color: var(--primary-fg);
+    position: relative;
+    z-index: 1;
+}
+.dark .login-shield svg {
+    color: #00bfff;
+    animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.login-card__title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+.dark .login-card__title {
+    color: #00bfff; /* same as .dark .hero__title */
+}
+
+.login-card__subtitle {
+    font-size: 0.8rem;
+    color: var(--muted-fg);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 0.125rem;
+}
+.dark .login-card__subtitle {
+    color: rgba(0,191,255,0.65);
+}
+
+/* ── Alert Banners ─────────────────────────────────────── */
+.login-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+}
+.login-alert svg {
+    width: 1.125rem;
+    height: 1.125rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+/* Error — uses --destructive variable */
+.login-alert--error {
+    background: rgba(198,40,40,0.1);
+    border: 1px solid rgba(198,40,40,0.35);
+    color: var(--destructive);
+}
+.dark .login-alert--error {
+    background: rgba(239,68,68,0.12);
+    border-color: rgba(239,68,68,0.4);
+    color: #ef4444;
+    box-shadow: 0 0 12px rgba(239,68,68,0.15);
+}
+
+/* Success — uses --secondary (emerald green / cyan) */
+.login-alert--success {
+    background: rgba(46,125,50,0.1);
+    border: 1px solid rgba(46,125,50,0.35);
+    color: var(--secondary);
+}
+.dark .login-alert--success {
+    background: rgba(0,212,255,0.08);
+    border-color: rgba(0,212,255,0.35);
+    color: #00d4ff;
+    box-shadow: 0 0 12px rgba(0,212,255,0.1);
+}
+
+/* ── Form ──────────────────────────────────────────────── */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--fg);
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+}
+.dark .form-label {
+    color: rgba(0,191,255,0.85);
+}
+.form-label svg {
+    width: 0.875rem;
+    height: 0.875rem;
+    color: var(--primary);
+}
+.dark .form-label svg {
+    color: #00bfff;
+}
+
+/* Input wrapper — holds the input + scan line overlay */
+.form-input-wrap {
+    position: relative;
+    overflow: hidden;
+    border-radius: calc(var(--radius) - 0.125rem);
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    color: var(--fg);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 0.125rem);
+    outline: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    position: relative;
+    z-index: 1;
+}
+.form-input::placeholder {
+    color: var(--muted-fg);
+    opacity: 0.7;
+}
+.form-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(26,35,126,0.12);
+}
+.dark .form-input {
+    background: rgba(10,21,37,0.7);
+    border-color: rgba(0,191,255,0.25);
+    color: #e8eeff;
+}
+.dark .form-input::placeholder {
+    color: rgba(138,160,192,0.6);
+}
+.dark .form-input:focus {
+    border-color: #00bfff;
+    box-shadow: 0 0 0 3px rgba(0,191,255,0.15), 0 0 20px rgba(0,191,255,0.2);
+}
+
+/* Scan line inside the input — dark mode only, same pattern as cards */
+.form-input__scan {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, rgba(0,191,255,0.12), transparent);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+.dark .form-input-wrap:focus-within .form-input__scan {
+    opacity: 1;
+    animation: scan 2s linear infinite;
+}
+
+/* ── Login Button ──────────────────────────────────────── */
+.btn-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    margin-top: 0.5rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    color: var(--primary-fg);
+    background: var(--primary);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
+}
+.btn-login svg {
+    width: 1.125rem;
+    height: 1.125rem;
+}
+.btn-login:hover {
+    background: #1565c0; /* slightly lighter navy */
+    box-shadow: 0 4px 16px rgba(26,35,126,0.3);
+}
+.btn-login:active {
+    transform: translateY(1px);
+}
+
+/* Dark mode button — electric blue, matches card CTAs */
+.dark .btn-login {
+    background: #00bfff;
+    color: #0a1525;
+    box-shadow: 0 0 20px rgba(0,191,255,0.35);
+}
+.dark .btn-login:hover {
+    background: #00d4ff;
+    box-shadow: 0 0 30px rgba(0,191,255,0.55), 0 0 60px rgba(0,191,255,0.2);
+}
+
+/* ── Card Footer (back link) ───────────────────────────── */
+.login-card__footer {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+.dark .login-card__footer {
+    border-color: rgba(0,191,255,0.15);
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted-fg);
+    transition: color 0.2s ease;
+}
+.back-link svg {
+    width: 0.875rem;
+    height: 0.875rem;
+    transition: transform 0.2s ease;
+}
+.back-link:hover {
+    color: var(--primary);
+}
+.back-link:hover svg {
+    transform: translateX(-3px);
+}
+.dark .back-link:hover {
+    color: #00bfff;
+    filter: drop-shadow(0 0 8px rgba(0,191,255,0.5));
+}
+
+/* ── Security Notice ───────────────────────────────────── */
+.login-notice {
+    margin-top: 1.25rem;
+    font-size: 0.75rem;
+    color: var(--muted-fg);
+    text-align: center;
+    max-width: 26rem;
+    line-height: 1.6;
+}
+.dark .login-notice {
+    color: rgba(138,160,192,0.7);
+}
+
+/* ── Theme toggle position (same as index hero) ────────── */
+/* .theme-toggle-wrap is already positioned absolute top-right  */
+/* in style_for_index.css — reuse it here with a small offset  */
+.login-section .theme-toggle-wrap,
+main > .theme-toggle-wrap {
+    position: fixed;  /* fixed so it stays visible while scrolling */
+    top: 4.5rem;      /* clears the emergency bar */
+    right: 1rem;
+    z-index: 20;
+}
