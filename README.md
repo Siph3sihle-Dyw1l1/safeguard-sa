@@ -103,10 +103,10 @@
 | Role | Member | Focus Areas |
 |------|--------|-------------|
 | **Architect** | [S DYWILI](https://github.com/Siph3sihle-Dyw1l1) | Spring Boot skeleton, Security, Deployment (Docker + GCP) |
-| **AI Medic** | [MJ KGOMO]() | Gemini API, Safety Gate, RAG pipeline, MedQA ingestion |
-| **Map Specialist** | [KC MASHA]()  | Leaflet.js, tip submission, geocoding, filters |
-| **Data & Stats** | [N CHUMA]() | PostgreSQL + pgvector, repositories, dashboard charts |
-| **Security & QA** | [T PALE]() | Spring Security, login, hallucination tests, JUnit |
+| **AI Medic** | [MJ KGOMO](https://github.com/mapk6-apl) | Gemini API, Safety Gate, RAG pipeline, MedQA ingestion |
+| **Map Specialist** | [KC MASHA](https://github.com/codedbykabelo)  | Leaflet.js, tip submission, geocoding, filters |
+| **Data & Stats** | [N CHUMA](https://github.com/chums-glitch) | PostgreSQL + pgvector, repositories, dashboard charts |
+| **Security & QA** | [T PALE](https://github.com/Tshephang497) | Spring Security, login, hallucination tests, JUnit |
 
 ## 📅 Development Timeline (8 Weeks)
 
