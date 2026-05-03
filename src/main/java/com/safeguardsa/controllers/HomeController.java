@@ -19,12 +19,6 @@ public class HomeController {
         return "login.html"; // templates/login.html
     }
 
-    // ADMIN TIPS — protected by SecurityConfig (.hasRole("ADMIN"))
-    @GetMapping("/admin/tips")
-    public String adminTips() {
-        return "admin-tips.html"; // templates/admin-tips.html
-    }
-
     // TEMP: Remove this when Member C creates SafetyMapController.java
     @GetMapping("/map")
     public String mapTemp() {
