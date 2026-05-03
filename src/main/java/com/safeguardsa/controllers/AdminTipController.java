@@ -52,7 +52,7 @@ public class AdminTipController {
         model.addAttribute("approvedCount", safetyTipRepository.countByStatus("APPROVED"));
         model.addAttribute("flaggedCount", safetyTipRepository.countByStatus("FLAGGED"));
 
-        return "admin-tips";
+        return "admin-tips.html";
     }
 
     // ── Approve a tip ────────────────────────────────────────────────────────
