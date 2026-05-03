@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SafeGuard SA — Moderate Tips</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f4f6f8; }
+
+        /* Header */
+        header { background: #2c3e50; color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+        header h1 { font-size: 1.3rem; }
+        nav a { color: #bdc3c7; text-decoration: none; margin-left: 16px; font-size: 0.9rem; }
+        nav a:hover { color: white; }
+
+        /* Exit button */
+        .exit-btn { position: fixed; top: 12px; right: 12px; background: #c0392b; color: white; padding: 10px 18px; border-radius: 4px; font-weight: bold; z-index: 9999; text-decoration: none; }
+
+        /* Container */
+        .container { max-width: 1200px; margin: 32px auto; padding: 0 24px; }
+        h2 { color: #2c3e50; margin-bottom: 20px; }
+
+        /* Stat cards */
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 32px; }
+        .stat-card { background: white; border-radius: 8px; padding: 20px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .stat-card .number { font-size: 2rem; font-weight: bold; color: #2980b9; }
+        .stat-card .label { color: #7f8c8d; font-size: 0.8rem; margin-top: 4px; }
+        .stat-card.warning .number { color: #e67e22; }
+        .stat-card.success .number { color: #27ae60; }
+        .stat-card.danger .number { color: #e74c3c; }
+
+        /* Filter bar */
+        .filter-bar { background: white; border-radius: 8px; padding: 16px 24px; margin-bottom: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        .filter-bar label { font-size: 0.85rem; color: #7f8c8d; margin-right: 4px; }
+        .filter-bar select { padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem; }
+        .filter-bar button { padding: 8px 20px; background: #2980b9; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
+        .filter-bar button:hover { background: #2471a3; }
+        .filter-bar a { padding: 8px 16px; color: #7f8c8d; text-decoration: none; font-size: 0.85rem; }
+
+        /* Table */
+        .table-wrap { background: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #2c3e50; color: white; }
+        th { padding: 14px 16px; text-align: left; font-size: 0.85rem; font-weight: 600; }
+        td { padding: 14px 16px; font-size: 0.85rem; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #fafafa; }
+
+        /* Status badges */
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
+        .badge-pending  { background: #fef9e7; color: #e67e22; border: 1px solid #f0d89a; }
+        .badge-approved { background: #eafaf1; color: #27ae60; border: 1px solid #a9dfbf; }
+        .badge-flagged  { background: #fdedec; color: #e74c3c; border: 1px solid #f1948a; }
+
+        /* Action buttons */
+        .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+        .btn { padding: 6px 14px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
+        .btn-approve { background: #27ae60; color: white; }
+        .btn-approve:hover { background: #229954; }
+        .btn-flag    { background: #e67e22; color: white; }
+        .btn-flag:hover { background: #ca6f1e; }
+        .btn-delete  { background: #e74c3c; color: white; }
+        .btn-delete:hover { background: #cb4335; }
+
+        /* Empty state */
+        .empty { text-align: center; padding: 60px; color: #7f8c8d; }
+        .empty p { font-size: 1rem; margin-top: 8px; }
+
+        /* Description truncate */
+        .desc { max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        @media (max-width: 768px) {
+            table { display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<a href="/exit" class="exit-btn">✕ Exit Site</a>
+
+<header>
+    <h1>🛡️ SafeGuard SA — Moderate Tips</h1>
+    <nav>
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h2>Safety Tip Moderation</h2>
+
+    <!-- Stat Cards -->
+    <div class="stat-grid">
+        <div class="stat-card">
+            <div class="number" th:text="${totalTips}">0</div>
+            <div class="label">Total Tips</div>
+        </div>
+        <div class="stat-card warning">
+            <div class="number" th:text="${pendingCount}">0</div>
+            <div class="label">Pending Review</div>
+        </div>
+        <div class="stat-card success">
+            <div class="number" th:text="${approvedCount}">0</div>
+            <div class="label">Approved</div>
+        </div>
+        <div class="stat-card danger">
+            <div class="number" th:text="${flaggedCount}">0</div>
+            <div class="label">Flagged</div>
+        </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <form th:action="@{/admin/tips}" method="get" class="filter-bar">
+        <div>
+            <label>Status:</label>
+            <select name="status">
+                <option value="">All</option>
+                <option value="PENDING"  th:selected="${selectedStatus == 'PENDING'}">Pending</option>
+                <option value="APPROVED" th:selected="${selectedStatus == 'APPROVED'}">Approved</option>
+                <option value="FLAGGED"  th:selected="${selectedStatus == 'FLAGGED'}">Flagged</option>
+            </select>
+        </div>
+        <div>
+            <label>Province:</label>
+            <select name="province">
+                <option value="">All</option>
+                <option value="Gauteng"       th:selected="${selectedProvince == 'Gauteng'}">Gauteng</option>
+                <option value="Western Cape"  th:selected="${selectedProvince == 'Western Cape'}">Western Cape</option>
+                <option value="KwaZulu-Natal" th:selected="${selectedProvince == 'KwaZulu-Natal'}">KwaZulu-Natal</option>
+                <option value="Eastern Cape"  th:selected="${selectedProvince == 'Eastern Cape'}">Eastern Cape</option>
+                <option value="Limpopo"       th:selected="${selectedProvince == 'Limpopo'}">Limpopo</option>
+                <option value="Mpumalanga"    th:selected="${selectedProvince == 'Mpumalanga'}">Mpumalanga</option>
+                <option value="North West"    th:selected="${selectedProvince == 'North West'}">North West</option>
+                <option value="Free State"    th:selected="${selectedProvince == 'Free State'}">Free State</option>
+                <option value="Northern Cape" th:selected="${selectedProvince == 'Northern Cape'}">Northern Cape</option>
+            </select>
+        </div>
+        <div>
+            <label>Category:</label>
+            <select name="category">
+                <option value="">All</option>
+                <option value="CRIME"      th:selected="${selectedCategory == 'CRIME'}">Crime</option>
+                <option value="ASSAULT"    th:selected="${selectedCategory == 'ASSAULT'}">Assault</option>
+                <option value="THEFT"      th:selected="${selectedCategory == 'THEFT'}">Theft</option>
+                <option value="SUSPICIOUS" th:selected="${selectedCategory == 'SUSPICIOUS'}">Suspicious</option>
+                <option value="OTHER"      th:selected="${selectedCategory == 'OTHER'}">Other</option>
+            </select>
+        </div>
+        <button type="submit">Filter</button>
+        <a th:href="@{/admin/tips}">Clear</a>
+    </form>
+
+    <!-- Tips Table -->
+    <div class="table-wrap">
+        <table th:if="${tips != null and !tips.isEmpty()}">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Province</th>
+                    <th>City</th>
+                    <th>Area / Street</th>
+                    <th>Category</th>
+                    <th>Time of Day</th>
+                    <th>Description</th>
+                    <th>Submitted</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="tip : ${tips}">
+                    <td th:text="${tip.id}">1</td>
+                    <td th:text="${tip.province}">Gauteng</td>
+                    <td th:text="${tip.city}">Johannesburg</td>
+                    <td th:text="${tip.streetArea}">Main Street</td>
+                    <td th:text="${tip.category}">CRIME</td>
+                    <td th:text="${tip.timeOfDay}">Evening</td>
+                    <td class="desc" th:text="${tip.description}">Description here</td>
+                    <td th:text="${#temporals.format(tip.submittedAt, 'dd MMM yyyy')}">01 Jan 2026</td>
+                    <td>
+                        <span th:if="${tip.status == 'PENDING'}"  class="badge badge-pending">Pending</span>
+                        <span th:if="${tip.status == 'APPROVED'}" class="badge badge-approved">Approved</span>
+                        <span th:if="${tip.status == 'FLAGGED'}"  class="badge badge-flagged">Flagged</span>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <!-- Approve -->
+                            <form th:action="@{/admin/tips/{id}/approve(id=${tip.id})}" method="post">
+                                <button type="submit" class="btn btn-approve"
+                                        th:disabled="${tip.status == 'APPROVED'}">✔ Approve</button>
+                            </form>
+                            <!-- Flag -->
+                            <form th:action="@{/admin/tips/{id}/flag(id=${tip.id})}" method="post">
+                                <button type="submit" class="btn btn-flag"
+                                        th:disabled="${tip.status == 'FLAGGED'}">⚑ Flag</button>
+                            </form>
+                            <!-- Delete -->
+                            <form th:action="@{/admin/tips/{id}/delete(id=${tip.id})}" method="post"
+                                  onsubmit="return confirm('Are you sure you want to delete this tip?')">
+                                <button type="submit" class="btn btn-delete">✖ Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Empty state -->
+        <div class="empty" th:if="${tips == null or tips.isEmpty()}">
+            <h3>No tips found</h3>
+            <p>Try changing your filters or check back later.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
