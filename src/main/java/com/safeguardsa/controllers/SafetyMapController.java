@@ -1,5 +1,6 @@
 package com.safeguardsa.controllers;
 
+import com.safeguardsa.models.SafetyTip;
 import com.safeguardsa.services.SafetyMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,9 +43,15 @@ public class SafetyMapController {
      * Called by Leaflet.js in map.js via fetch('/map/tips').Returns all APPROVED safety tips as JSON with coordinates and metadata.
      * @return
      */
+    /**
+     * GET /map/tips
+     * Calls the service to fetch approved pins for Leaflet.js
+     * @return 
+     */
     @GetMapping("/tips")
     @ResponseBody
     public List<Map<String, Object>> getApprovedTips() {
+        // We use the service here, NOT the repository directly
         return safetyMapService.getApprovedTipsForMap();
     }
 }
