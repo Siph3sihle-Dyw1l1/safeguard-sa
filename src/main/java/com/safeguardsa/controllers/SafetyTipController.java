@@ -27,8 +27,9 @@ public class SafetyTipController {
 
     /**
      * GET /tip
-     * Displays the anonymous safety tip submission form.
-     * Populates province, category, and time-of-day dropdowns.
+     * Displays the anonymous safety tip submission form.Populates province, category, and time-of-day dropdowns.
+     * @param model
+     * @return 
      */
     @GetMapping
     public String showTipForm(Model model) {

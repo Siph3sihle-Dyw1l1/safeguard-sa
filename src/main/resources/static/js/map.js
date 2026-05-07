@@ -22,18 +22,30 @@ const CATEGORY_COLOURS = {
 // -----------------------------------------------------------------------
 // 2. Initialise Leaflet map — centred on South Africa
 // -----------------------------------------------------------------------
-const map = L.map('map').setView([-28.4793, 24.6727], 6);
+// -----------------------------------------------------------------------
+// 2. Initialise Leaflet map — Restricted to South Africa
+// -----------------------------------------------------------------------
 
-// OpenStreetMap tiles — free, no API key ever needed
+// Define the geographical bounds for South Africa (South-West to North-East)
+const saBounds = L.latLngBounds(
+    L.latLng(-35.0, 16.0), // Bottom Left (Cape Agulhas area)
+    L.latLng(-22.0, 33.0)  // Top Right (Kruger/Limpopo border)
+);
+
+const map = L.map('map', {
+    center: [-28.4793, 24.6727],
+    zoom: 6,
+    minZoom: 5,               // Prevent zooming out to a world view
+    maxBounds: saBounds,      // Lock the map view to SA
+    maxBoundsViscosity: 1.0   // Makes the boundary solid (prevents "drifting")
+});
+
+// OpenStreetMap tiles — restricted to SA bounds
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    maxZoom: 18
+    maxZoom: 18,
+    bounds: saBounds 
 }).addTo(map);
-
-// -----------------------------------------------------------------------
-// 3. Layer group — cleared and redrawn when filters change
-// -----------------------------------------------------------------------
-const markerLayer = L.layerGroup().addTo(map);
 
 // -----------------------------------------------------------------------
 // 4. Fetch approved tips from SafetyMapController (GET /map/tips)
