@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeGuard SA — Submit a Safety Tip</title>
+
+    <!-- Use whatever shared CSS Member A has set up -->
+    <link rel="stylesheet" href="/static.css/style_for_index.css" />
+</head>
+<body>
+
+    <!-- Fake exit button — always visible on every page (Member A's ExitController handles /exit) -->
+    <a href="/exit" class="exit-btn">✕ Exit Site</a>
+
+    <!-- Header / nav — match Member A's index.html style -->
+    <header>
+        <h1>🛡️ SafeGuard SA — Submit a Safety Tip</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/map">Safety Map</a>
+            <a href="/tip">Report Tip</a>
+            <a href="/chat">AI Medic</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <h2>🚨 Anonymous Safety Tip</h2>
+
+        <p>
+            Help other students stay safe by describing a dangerous area near
+            your campus or neighbourhood.<br>
+            <strong>No name, email, or phone number is ever collected.</strong>
+        </p>
+
+        <!-- Flash messages passed from SafetyTipController via RedirectAttributes -->
+        <div th:if="${successMessage}" th:text="${successMessage}"
+             style="color:green; padding: 10px; border: 1px solid green; margin-bottom: 12px;"></div>
+        <div th:if="${errorMessage}" th:text="${errorMessage}"
+             style="color:red; padding: 10px; border: 1px solid red; margin-bottom: 12px;"></div>
+
+        <form action="/tip/submit" method="POST">
+
+            <!-- Province -->
+            <label for="province">Province *</label>
+            <select id="province" name="province" required>
+                <option value="">— Select Province —</option>
+                <option>Gauteng</option>
+                <option>Western Cape</option>
+                <option>KwaZulu-Natal</option>
+                <option>Eastern Cape</option>
+                <option>Free State</option>
+                <option>Limpopo</option>
+                <option>Mpumalanga</option>
+                <option>North West</option>
+                <option>Northern Cape</option>
+            </select>
+
+            <!-- City / Town -->
+            <label for="city">City / Town *</label>
+            <input type="text" id="city" name="city"
+                   placeholder="e.g. Johannesburg" required maxlength="100" />
+
+            <!-- Street or Area -->
+            <label for="streetArea">Street or Area Name *</label>
+            <input type="text" id="streetArea" name="streetArea"
+                   placeholder="e.g. Noord St taxi rank" required maxlength="150" />
+
+            <!-- Threat Category -->
+            <label for="category">Threat Category *</label>
+            <select id="category" name="category" required>
+                <option value="">— Select Category —</option>
+                <option value="CRIME">Crime (general)</option>
+                <option value="ASSAULT">Assault / GBV</option>
+                <option value="THEFT">Theft / Robbery</option>
+                <option value="SUSPICIOUS">Suspicious Activity</option>
+                <option value="OTHER">Other</option>
+            </select>
+
+            <!-- Description -->
+            <label for="description">Description *</label>
+            <textarea id="description" name="description" rows="4"
+                      placeholder="Describe the safety concern. Do NOT include your name, phone number, or email."
+                      required minlength="10" maxlength="500"></textarea>
+            <small>Minimum 10 characters. Do not include personal information.</small>
+
+            <!-- Time of Day -->
+            <label for="timeOfDay">Time of Day *</label>
+            <select id="timeOfDay" name="timeOfDay" required>
+                <option value="">— Select Time —</option>
+                <option value="Morning">Morning (05:00–11:59)</option>
+                <option value="Afternoon">Afternoon (12:00–17:59)</option>
+                <option value="Evening">Evening (18:00–20:59)</option>
+                <option value="Night">Night (21:00–04:59)</option>
+            </select>
+
+            <!-- Anonymity notice -->
+            <p style="background:#eaf6ea; border:1px solid #b2dfb2;
+                      padding:10px; margin-top:14px; font-size:0.85rem;">
+                🔒 Your anonymity is guaranteed. No name, email, or phone number
+                is stored. Your IP address is not logged.
+            </p>
+
+            <button type="submit">Submit Safety Tip</button>
+            <a href="/map">← Back to Map</a>
+
+        </form>
+
+    </main>
+
+</body>
+</html>

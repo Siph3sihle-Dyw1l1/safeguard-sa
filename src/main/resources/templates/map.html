@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeGuard SA — Safety Map</title>
+
+    <!-- Leaflet CSS — free, no API key needed -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Use whatever shared CSS Member A has set up -->
+    <link rel="stylesheet" href="/static.css/style_for_index.css" />
+</head>
+<body>
+
+    <!-- Fake exit button — always visible on every page (Member A's ExitController handles /exit) -->
+    <a href="/exit" class="exit-btn">✕ Exit Site</a>
+
+    <!-- Header / nav — match Member A's index.html style -->
+    <header>
+        <h1>🛡️ SafeGuard SA — Safety Map</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/map">Safety Map</a>
+            <a href="/tip">Report Tip</a>
+            <a href="/chat">AI Medic</a>
+        </nav>
+    </header>
+
+    <!-- Main layout: filter sidebar + map -->
+    <div class="map-wrapper">
+
+        <!-- Filter panel -->
+        <aside class="filter-panel">
+            <h2>Filter Tips</h2>
+
+            <label for="filterProvince">Province</label>
+            <select id="filterProvince">
+                <option value="">All Provinces</option>
+                <option>Gauteng</option>
+                <option>Western Cape</option>
+                <option>KwaZulu-Natal</option>
+                <option>Eastern Cape</option>
+                <option>Free State</option>
+                <option>Limpopo</option>
+                <option>Mpumalanga</option>
+                <option>North West</option>
+                <option>Northern Cape</option>
+            </select>
+
+            <label for="filterCategory">Category</label>
+            <select id="filterCategory">
+                <option value="">All Categories</option>
+                <option value="CRIME">Crime</option>
+                <option value="ASSAULT">Assault</option>
+                <option value="THEFT">Theft</option>
+                <option value="SUSPICIOUS">Suspicious Activity</option>
+                <option value="OTHER">Other</option>
+            </select>
+
+            <button id="applyFilters">Apply Filters</button>
+            <button id="resetFilters">Reset</button>
+
+            <!-- Map legend -->
+            <div class="legend">
+                <h3>Legend</h3>
+                <p><span style="color:darkred;">●</span> Assault</p>
+                <p><span style="color:red;">●</span> Crime</p>
+                <p><span style="color:orange;">●</span> Theft</p>
+                <p><span style="color:gold;">●</span> Suspicious</p>
+                <p><span style="color:grey;">●</span> Other</p>
+            </div>
+
+            <a href="/tip">🚨 Submit a Safety Tip</a>
+        </aside>
+
+        <!-- Leaflet map container -->
+        <div id="map"></div>
+
+    </div>
+
+    <p style="padding: 8px 14px; font-size: 0.82rem; color: #555;">
+        ℹ️ All tips are anonymous and community-submitted.
+        Always call <strong>10111</strong> in an emergency.
+    </p>
+
+    <!-- Leaflet JS — free, no API key needed -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Member C: map logic -->
+    <script src="/static.js/map.js"></script>
+
+</body>
+</html>
