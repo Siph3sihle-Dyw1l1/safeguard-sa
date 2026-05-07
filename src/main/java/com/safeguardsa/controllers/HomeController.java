@@ -30,10 +30,4 @@ public class HomeController {
     public String mapTemp() {
         return "placeholder.html"; // templates/placeholder.html
     }
-
-    // TEMP: Remove this when Member B creates ChatController.java
-    @GetMapping("/chat")
-    public String chatTemp() {
-        return "placeholder.html"; // templates/placeholder.html
-    }
 }
