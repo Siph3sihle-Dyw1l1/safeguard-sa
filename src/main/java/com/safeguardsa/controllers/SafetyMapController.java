@@ -26,8 +26,9 @@ public class SafetyMapController {
 
     /**
      * GET /map
-     * Renders the public safety map page (map.html).
-     * Passes province and category lists to populate the filter dropdowns.
+     * Renders the public safety map page (map.html).Passes province and category lists to populate the filter dropdowns.
+     * @param model
+     * @return 
      */
     @GetMapping
     public String showMap(Model model) {
@@ -38,8 +39,8 @@ public class SafetyMapController {
 
     /**
      * GET /map/tips
-     * Called by Leaflet.js in map.js via fetch('/map/tips').
-     * Returns all APPROVED safety tips as JSON with coordinates and metadata.
+     * Called by Leaflet.js in map.js via fetch('/map/tips').Returns all APPROVED safety tips as JSON with coordinates and metadata.
+     * @return
      */
     @GetMapping("/tips")
     @ResponseBody
