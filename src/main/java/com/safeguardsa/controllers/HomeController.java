@@ -19,15 +19,4 @@ public class HomeController {
         return "login.html"; // templates/login.html
     }
 
-    // TEMP: Remove this when Member C creates SafetyMapController.java
-    @GetMapping("/map")
-    public String mapTemp() {
-        return "placeholder.html"; // templates/placeholder.html
-    }
-
-    // TEMP: Remove this when Member B creates ChatController.java
-    @GetMapping("/chat")
-    public String chatTemp() {
-        return "placeholder.html"; // templates/placeholder.html
-    }
 }
