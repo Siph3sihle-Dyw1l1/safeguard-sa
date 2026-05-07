@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.core.userdetails.User;           // ADDED THIS
 import org.springframework.security.core.userdetails.UserDetails;    // ADDED THIS
 import org.springframework.security.core.userdetails.UserDetailsService; // ADDED THIS
@@ -41,7 +40,7 @@ public class SecurityConfig {
                 .accessDeniedPage("/") // ← non-admins go home, not to login
                 )
                 .logout(logout -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/?logout=true")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
