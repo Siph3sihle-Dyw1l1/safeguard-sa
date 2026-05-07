@@ -10,20 +10,20 @@
 // 1. Color mapping for threat categories
 // -----------------------------------------------------------------------
 const CATEGORY_COLOURS = {
-    CRIME:      '#e74c3c', // Red
-    ASSAULT:    '#8e44ad', // Purple/Dark Red
-    THEFT:      '#e67e22', // Orange
+    CRIME: '#e74c3c', // Red
+    ASSAULT: '#8e44ad', // Purple/Dark Red
+    THEFT: '#e67e22', // Orange
     SUSPICIOUS: '#f1c40f', // Gold
-    OTHER:      '#95a5a6'  // Grey
+    OTHER: '#95a5a6'  // Grey
 };
 
 // -----------------------------------------------------------------------
 // 2. Initialise Leaflet map — Restricted strictly to South Africa
 // -----------------------------------------------------------------------
 const saBounds = L.latLngBounds(
-    L.latLng(-35.0, 16.0), // South-West
-    L.latLng(-22.0, 33.0)  // North-East
-);
+        L.latLng(-35.0, 16.0), // South-West
+        L.latLng(-22.0, 33.0)  // North-East
+        );
 
 const map = L.map('map', {
     center: [-28.4793, 24.6727],
@@ -50,19 +50,23 @@ let allTips = [];
 // -----------------------------------------------------------------------
 function fetchAndRenderTips() {
     fetch('/map/tips')
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
-            return response.json();
-        })
-        .then(tips => {
-            allTips = tips;
-            renderTips(tips, '', ''); // Initial draw with no filters
-        })
-        .catch(err => console.error('[map.js] Error loading tips:', err));
+            .then(response => {
+                if (!response.ok)
+                    throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(tips => {
+                allTips = tips;
+                renderTips(tips, '', ''); // Initial draw with no filters
+            })
+            .catch(err => console.error('[map.js] Error loading tips:', err));
 }
 
 // -----------------------------------------------------------------------
 // 4. Function to create real PINS from data
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+// 4. Function to create 3D GLOSSY PINS from data
 // -----------------------------------------------------------------------
 function renderTips(tips, filterProvince, filterCategory) {
     // Clear old pins before drawing new ones
@@ -70,30 +74,61 @@ function renderTips(tips, filterProvince, filterCategory) {
 
     tips.forEach(function (tip) {
         // Apply Filters logic
-        if (filterProvince && tip.province !== filterProvince) return;
-        if (filterCategory && tip.category !== filterCategory) return;
+        if (filterProvince && tip.province !== filterProvince)
+            return;
+        if (filterCategory && tip.category !== filterCategory)
+            return;
 
         const colour = CATEGORY_COLOURS[tip.category] || 'grey';
 
-        // ✅ UPGRADE: Create a custom SVG Map Pin instead of a dot
+        // We create a unique ID for the gradient based on the category
+        const gradId = `grad-${tip.category}`;
+
+        // ✅ UPGRADE: The 3D Programmatic Pushpin Code
         const svgPin = `
-            <svg viewBox="0 0 24 24" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" 
-                      fill="${colour}" stroke="#ffffff" stroke-width="1.5" style="filter: drop-shadow(0px 3px 2px rgba(0,0,0,0.4));"/>
-            </svg>`;
+            <svg viewBox="0 0 40 65" width="32" height="52" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="${gradId}" cx="30%" cy="30%" r="70%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+                        <stop offset="25%" stop-color="${colour}" stop-opacity="1" />
+                        <stop offset="85%" stop-color="${colour}" stop-opacity="1" />
+                        <stop offset="100%" stop-color="#000000" stop-opacity="0.5" />
+                    </radialGradient>
+                    
+                    <linearGradient id="needleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#888" />
+                        <stop offset="50%" stop-color="#f8f8f8" />
+                        <stop offset="100%" stop-color="#444" />
+                    </linearGradient>
+                </defs>
+                
+                <g style="filter: drop-shadow(4px 6px 3px rgba(0,0,0,0.4));">
+                    <polygon points="20,60 18.5,30 21.5,30" fill="url(#needleGrad)" />
+                    
+                    <ellipse cx="20" cy="30" rx="7" ry="2.5" fill="${colour}" />
+                    <ellipse cx="20" cy="30" rx="7" ry="2.5" fill="#000" opacity="0.3" /> 
+                    
+                    <polygon points="13,30 27,30 24,16 16,16" fill="${colour}" />
+                    <polygon points="13,30 27,30 24,16 16,16" fill="#000" opacity="0.1" /> 
+
+                    <ellipse cx="20" cy="16" rx="14" ry="4" fill="${colour}" />
+
+                    <path d="M 6,16 A 14,14 0 1,1 34,16 Z" fill="url(#${gradId})" />
+                </g>
+            </svg>
+        `;
 
         const customIcon = L.divIcon({
             className: 'custom-map-pin',
             html: svgPin,
-            iconSize: [36, 36],
-            iconAnchor: [18, 36],
-            popupAnchor: [0, -32]
+            iconSize: [32, 52], // Size of the new pin
+            iconAnchor: [16, 52], // The exact point of the needle that touches the map
+            popupAnchor: [0, -45]      // Where the text box pops up
         });
 
-        // Use L.marker for pins instead of circleMarker
-        const marker = L.marker([tip.latitude, tip.longitude], { icon: customIcon });
+        // Create the marker and bind the popup
+        const marker = L.marker([tip.latitude, tip.longitude], {icon: customIcon});
 
-        // Popup: no personal info ever shown
         marker.bindPopup(`
             <div style="font-family: Arial, sans-serif; padding: 5px;">
                 <strong style="color:${colour}; font-size: 1.1rem;">${tip.category}</strong><br>

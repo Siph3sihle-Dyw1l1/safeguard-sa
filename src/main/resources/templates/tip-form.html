@@ -5,10 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SafeGuard SA — Submit a Safety Tip</title>
 
-        <!-- Use whatever shared CSS Member A has set up -->
         <link rel="stylesheet" href="/css/map_css.css" />
 
-        <!-- Favicons -->
         <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_io/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_io/favicon-16x16.png">
@@ -18,10 +16,8 @@
     </head>
     <body>
 
-        <!-- Fake exit button — always visible on every page (Member A's ExitController handles /exit) -->
         <a href="/exit" class="exit-btn">✕ Exit Site</a>
 
-        <!-- Header / nav — match Member A's index.html style -->
         <header>
             <h1>🛡️ SafeGuard SA — Submit a Safety Tip</h1>
             <nav>
@@ -42,7 +38,6 @@
                 <strong>No name, email, or phone number is ever collected.</strong>
             </p>
 
-            <!-- Flash messages passed from SafetyTipController via RedirectAttributes -->
             <div th:if="${successMessage}" th:text="${successMessage}"
                  style="color:green; padding: 10px; border: 1px solid green; margin-bottom: 12px;"></div>
             <div th:if="${errorMessage}" th:text="${errorMessage}"
@@ -50,7 +45,9 @@
 
             <form action="/tip/submit" method="POST">
 
-                <!-- Province -->
+                <input type="hidden" id="latitude" name="latitude" value="">
+                <input type="hidden" id="longitude" name="longitude" value="">
+
                 <label for="province">Province *</label>
                 <select id="province" name="province" required>
                     <option value="">— Select Province —</option>
@@ -65,17 +62,26 @@
                     <option>Northern Cape</option>
                 </select>
 
-                <!-- City / Town -->
                 <label for="city">City / Town *</label>
                 <input type="text" id="city" name="city"
-                       placeholder="e.g. Johannesburg" required maxlength="100" />
+                       placeholder="e.g. Polokwane" required maxlength="100" />
 
-                <!-- Street or Area -->
                 <label for="streetArea">Street or Area Name *</label>
-                <input type="text" id="streetArea" name="streetArea"
-                       placeholder="e.g. Noord St taxi rank" required maxlength="150" />
+                <div style="position: relative; display: flex; gap: 8px;">
+                    <input type="text" id="streetArea" name="streetArea" 
+                           placeholder="Start typing... (e.g., Nelson Mandela Dr)" required autocomplete="off" maxlength="150" style="flex-grow: 1;" />
 
-                <!-- Threat Category -->
+                    <button type="button" id="gpsBtn" style="background: #27ae60; padding: 10px; width: auto; white-space: nowrap;">
+                        📍 Use My Location
+                    </button>
+
+                    <div id="suggestions" style="position: absolute; top: 100%; left: 0; right: 0; background: white;
+                         border: 1px solid #ccc; max-height: 200px; overflow-y: auto; z-index: 1000; display: none;
+                         box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 4px;">
+                    </div>
+                </div>
+                <small id="geoStatus" style="color: #e67e22; display: block; margin-bottom: 12px;">Start typing or click the GPS button...</small>
+
                 <label for="category">Threat Category *</label>
                 <select id="category" name="category" required>
                     <option value="">— Select Category —</option>
@@ -86,14 +92,12 @@
                     <option value="OTHER">Other</option>
                 </select>
 
-                <!-- Description -->
                 <label for="description">Description *</label>
                 <textarea id="description" name="description" rows="4"
                           placeholder="Describe the safety concern. Do NOT include your name, phone number, or email."
                           required minlength="10" maxlength="500"></textarea>
                 <small>Minimum 10 characters. Do not include personal information.</small>
 
-                <!-- Time of Day -->
                 <label for="timeOfDay">Time of Day *</label>
                 <select id="timeOfDay" name="timeOfDay" required>
                     <option value="">— Select Time —</option>
@@ -103,7 +107,6 @@
                     <option value="Night">Night (21:00–04:59)</option>
                 </select>
 
-                <!-- Anonymity notice -->
                 <p style="background:#eaf6ea; border:1px solid #b2dfb2;
                    padding:10px; margin-top:14px; font-size:0.85rem;">
                     🔒 Your anonymity is guaranteed. No name, email, or phone number
@@ -117,5 +120,155 @@
 
         </main>
 
+        <script>
+            const streetInput = document.getElementById('streetArea');
+            const cityInput = document.getElementById('city');
+            const suggestionsBox = document.getElementById('suggestions');
+            const latInput = document.getElementById('latitude');
+            const lonInput = document.getElementById('longitude');
+            const statusText = document.getElementById('geoStatus');
+            // --- 📍 NEW: GPS "Use My Location" Logic (Reverse Geocoding) ---
+            const gpsBtn = document.getElementById('gpsBtn');
+            let timeout = null;
+
+            streetInput.addEventListener('input', function () {
+                clearTimeout(timeout);
+                const query = this.value;
+                const city = cityInput.value;
+
+                // Wait until they type at least 4 letters
+                if (query.length < 4) {
+                    suggestionsBox.style.display = 'none';
+                    statusText.innerText = "Start typing to search for exact coordinates...";
+                    statusText.style.color = "#e67e22";
+                    return;
+                }
+
+                statusText.innerText = "Searching OpenStreetMap...";
+                statusText.style.color = "#2980b9";
+
+                // Wait 600ms after they stop typing so we don't spam the free API
+                timeout = setTimeout(() => {
+                    // Combine street and city for better accuracy
+                    const searchQuery = `${query}, ${city}`;
+
+                    // Notice the &countrycodes=za right here! It locks it to South Africa.
+                    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&countrycodes=za&limit=5`;
+
+                    fetch(url)
+                            .then(res => res.json())
+                            .then(data => {
+                                suggestionsBox.innerHTML = '';
+                                if (data.length > 0) {
+                                    suggestionsBox.style.display = 'block';
+                                    data.forEach(item => {
+                                        const div = document.createElement('div');
+                                        div.textContent = item.display_name;
+                                        div.style.padding = '10px';
+                                        div.style.cursor = 'pointer';
+                                        div.style.borderBottom = '1px solid #eee';
+                                        div.style.fontSize = '0.85rem';
+
+                                        // When the student clicks a matching street:
+                                        div.onclick = () => {
+                                            streetInput.value = item.name; // Fill the input
+                                            latInput.value = item.lat;     // Save exact Latitude secretly
+                                            lonInput.value = item.lon;     // Save exact Longitude secretly
+                                            suggestionsBox.style.display = 'none';
+                                            statusText.innerText = "✅ Exact location verified!";
+                                            statusText.style.color = "#27ae60";
+                                        };
+
+                                        // Add hover effect
+                                        div.onmouseover = () => div.style.background = '#f4f6f8';
+                                        div.onmouseout = () => div.style.background = 'white';
+
+                                        suggestionsBox.appendChild(div);
+                                    });
+                                } else {
+                                    suggestionsBox.style.display = 'none';
+                                    statusText.innerText = "No exact match found. Map will place pin in city center.";
+                                    statusText.style.color = "#e67e22";
+                                }
+                            })
+                            .catch(err => {
+                                statusText.innerText = "Search error. Please enter manually.";
+                            });
+                }, 600);
+            });
+
+            gpsBtn.addEventListener('click', function () {
+                if (!navigator.geolocation) {
+                    statusText.innerText = "Geolocation is not supported by your browser.";
+                    statusText.style.color = "red";
+                    return;
+                }
+
+                statusText.innerText = "Locating you... (Please click 'Allow' if prompted)";
+                statusText.style.color = "#2980b9";
+                gpsBtn.disabled = true; // prevent spam clicking
+                gpsBtn.innerText = "⏳ Locating...";
+
+                navigator.geolocation.getCurrentPosition(
+                        function (position) {
+                            const lat = position.coords.latitude;
+                            const lon = position.coords.longitude;
+
+                            // 1. Save exact coordinates immediately
+                            latInput.value = lat;
+                            lonInput.value = lon;
+
+                            // 2. Ask OpenStreetMap what street this is (Reverse Geocoding)
+                            const reverseUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
+
+                            fetch(reverseUrl)
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        if (data && data.address) {
+                                            // Extract the best street/area name available
+                                            const street = data.address.road || data.address.suburb || data.address.neighbourhood || "Current Location";
+                                            const userCity = data.address.city || data.address.town || data.address.village || "";
+
+                                            streetInput.value = street;
+                                            if (userCity && !cityInput.value) {
+                                                cityInput.value = userCity; // Auto-fill city if it's empty
+                                            }
+
+                                            statusText.innerText = `✅ Found you at: ${street}`;
+                                            statusText.style.color = "#27ae60";
+                                        } else {
+                                            streetInput.value = "GPS Location Captured";
+                                            statusText.innerText = "✅ GPS coordinates saved, but couldn't find exact street name.";
+                                            statusText.style.color = "#27ae60";
+                                        }
+                                        gpsBtn.disabled = false;
+                                        gpsBtn.innerText = "📍 Use My Location";
+                                    })
+                                    .catch(err => {
+                                        streetInput.value = "GPS Location Captured";
+                                        statusText.innerText = "✅ Coordinates saved (Street name lookup failed).";
+                                        statusText.style.color = "#27ae60";
+                                        gpsBtn.disabled = false;
+                                        gpsBtn.innerText = "📍 Use My Location";
+                                    });
+                        },
+                        function (error) {
+                            // Handle user denying permission or GPS failure
+                            statusText.innerText = "❌ Could not get location. Please check permissions or type manually.";
+                            statusText.style.color = "red";
+                            gpsBtn.disabled = false;
+                            gpsBtn.innerText = "📍 Use My Location";
+                        },
+                        {enableHighAccuracy: true, timeout: 10000, maximumAge: 0}
+                );
+            });
+
+            // Close suggestions if they click anywhere else on the screen
+            document.addEventListener('click', function (e) {
+                if (e.target !== streetInput) {
+                    suggestionsBox.style.display = 'none';
+                }
+            });
+        </script>
     </body>
 </html>

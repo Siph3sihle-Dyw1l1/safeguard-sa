@@ -52,6 +52,8 @@ public class SafetyTipController {
      * @param category
      * @param description
      * @param timeOfDay
+     * @param latitude
+     * @param longitude
      * @param redirectAttributes
      * @return
      */
@@ -63,10 +65,14 @@ public class SafetyTipController {
             @RequestParam String category,
             @RequestParam String description,
             @RequestParam String timeOfDay,
+            @RequestParam(required = false) Double latitude, // <-- ADD THIS
+            @RequestParam(required = false) Double longitude, // <-- ADD THIS
             RedirectAttributes redirectAttributes) {
 
         try {
-            safetyTipService.submitTip(province, city, streetArea, category, description, timeOfDay);
+            // <-- UPDATE THIS CALL TO INCLUDE THE NEW VARIABLES
+            safetyTipService.submitTip(province, city, streetArea, category, description, timeOfDay, latitude, longitude);
+
             redirectAttributes.addFlashAttribute("successMessage",
                     "Thank you! Your safety tip has been submitted and will appear on the map after review.");
             return "redirect:/map";
