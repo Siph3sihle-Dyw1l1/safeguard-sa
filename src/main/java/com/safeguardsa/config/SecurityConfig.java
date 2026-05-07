@@ -9,8 +9,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.core.userdetails.User;           // ADDED THIS
 import org.springframework.security.core.userdetails.UserDetails;    // ADDED THIS
 import org.springframework.security.core.userdetails.UserDetailsService; // ADDED THIS
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager; // ADDED THIS
 
+/**
+ *
+ * @author S DYWILI
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -18,53 +24,53 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) 
-            .authorizeHttpRequests(auth -> auth
-                // 1. THE ASSETS: Allow the CSS/Images/Favicons first (Stops the 403)
-                .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
-                
-                // 2. THE PUBLIC ROUTES: Explicitly permit these paths (Stops the Redirect Loop)
-                .requestMatchers("/", "/index", "/map", "/chat", "/exit", "/login").permitAll()
-                
-                // 3. Only ADMIN users can access anything inside /admin (e.g. /admin/dashboard)
-                // Regular users (USER role) will be blocked    
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/static/**", "/css/**", "/js/**",
+                        "/images/**", "/favicon.ico").permitAll()
+                .requestMatchers("/", "/index", "/map", "/chat",
+                        "/exit", "/login", "/tip", "/tip/submit",
+                        "/chat/ask", "/emergency").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                    
-                // 4. THE SECURE ZONE: Everything else (Dashboard, Admin) needs login
                 .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")      // Points to your custom login URL
-                .loginProcessingUrl("/login") // Matches the form action
-                .defaultSuccessUrl("/admin/dashboard", true)
-                .failureUrl("/login?error=true")  // QA: easier to test failed login
-                .permitAll()               // CRITICAL: Allows the login page to be seen by the public
-            )
+                )
+                .formLogin(form -> form
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/admin/dashboard", true) // ← FIXED
+                .failureUrl("/login?error=true")
+                .permitAll()
+                )
                 .exceptionHandling(ex -> ex
-        .accessDeniedPage("/login")
-    )
-            .logout(logout -> logout
+                .accessDeniedPage("/") // ← non-admins go home, not to login
+                )
+                .logout(logout -> logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/?logout=true") // QA: confirm logout worked
+                .logoutSuccessUrl("/?logout=true")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()
-            );
+                );
 
         return http.build();
     }
-    // QA TEST USER 
+
     @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user1 = User.withDefaultPasswordEncoder()
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(); // ← no deprecation warning
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+        UserDetails user1 = User.builder()
                 .username("doctor1")
-                .password("SafeGuard2026")
+                .password(encoder.encode("SafeGuard2026"))
                 .roles("USER")
                 .build();
 
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin1") 
-                .password("***REMOVED***")
+        UserDetails admin = User.builder()
+                .username("admin1")
+                .password(encoder.encode("***REMOVED***"))
                 .roles("ADMIN")
                 .build();
 

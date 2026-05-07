@@ -1,119 +1,217 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>SafeGuard SA — Admin Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 0; }
-        header { background: #2c3e50; color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
-        header h1 { margin: 0; font-size: 1.4rem; }
-        .exit-btn { position: fixed; top: 12px; right: 12px; background: #c0392b; color: white; padding: 10px 18px; border-radius: 4px; font-weight: bold; z-index: 9999; text-decoration: none; }
-        .container { max-width: 1200px; margin: 32px auto; padding: 0 24px; }
-        h2 { color: #2c3e50; margin-bottom: 20px; }
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>SafeGuard SA — Admin Dashboard</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        <!-- Favicons -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_io/favicon-16x16.png">
+        <link rel="manifest" href="/images/favicon_io/site.webmanifest">
+        <link rel="shortcut icon" href="/images/favicon_io/favicon.ico">
 
-        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 40px; }
-        .stat-card { background: white; border-radius: 8px; padding: 24px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-        .stat-card .number { font-size: 2.2rem; font-weight: bold; color: #2980b9; }
-        .stat-card .label { color: #7f8c8d; font-size: 0.85rem; margin-top: 6px; }
-        .stat-card.danger .number { color: #e74c3c; }
-        .stat-card.warning .number { color: #e67e22; }
-        .stat-card.success .number { color: #27ae60; }
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: #f4f6f8;
+                margin: 0;
+                padding: 0;
+            }
+            header {
+                background: #2c3e50;
+                color: white;
+                padding: 16px 24px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            header h1 {
+                margin: 0;
+                font-size: 1.4rem;
+            }
+            .exit-btn {
+                position: fixed;
+                top: 12px;
+                right: 12px;
+                background: #c0392b;
+                color: white;
+                padding: 10px 18px;
+                border-radius: 4px;
+                font-weight: bold;
+                z-index: 9999;
+                text-decoration: none;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 32px auto;
+                padding: 0 24px;
+            }
+            h2 {
+                color: #2c3e50;
+                margin-bottom: 20px;
+            }
 
-        .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
-        .chart-card { background: white; border-radius: 8px; padding: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-        .chart-card h3 { margin: 0 0 16px 0; color: #2c3e50; font-size: 1rem; }
-        .chart-full { background: white; border-radius: 8px; padding: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); margin-bottom: 40px; }
-        .chart-full h3 { margin: 0 0 16px 0; color: #2c3e50; font-size: 1rem; }
+            .stat-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 16px;
+                margin-bottom: 40px;
+            }
+            .stat-card {
+                background: white;
+                border-radius: 8px;
+                padding: 24px;
+                text-align: center;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            }
+            .stat-card .number {
+                font-size: 2.2rem;
+                font-weight: bold;
+                color: #2980b9;
+            }
+            .stat-card .label {
+                color: #7f8c8d;
+                font-size: 0.85rem;
+                margin-top: 6px;
+            }
+            .stat-card.danger .number {
+                color: #e74c3c;
+            }
+            .stat-card.warning .number {
+                color: #e67e22;
+            }
+            .stat-card.success .number {
+                color: #27ae60;
+            }
 
-        nav a { color: #bdc3c7; text-decoration: none; margin-left: 16px; font-size: 0.9rem; }
-        nav a:hover { color: white; }
+            .chart-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+                margin-bottom: 40px;
+            }
+            .chart-card {
+                background: white;
+                border-radius: 8px;
+                padding: 24px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            }
+            .chart-card h3 {
+                margin: 0 0 16px 0;
+                color: #2c3e50;
+                font-size: 1rem;
+            }
+            .chart-full {
+                background: white;
+                border-radius: 8px;
+                padding: 24px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+                margin-bottom: 40px;
+            }
+            .chart-full h3 {
+                margin: 0 0 16px 0;
+                color: #2c3e50;
+                font-size: 1rem;
+            }
 
-        @media (max-width: 768px) {
-            .chart-grid { grid-template-columns: 1fr; }
-        }
-    </style>
-</head>
-<body>
+            nav a {
+                color: #bdc3c7;
+                text-decoration: none;
+                margin-left: 16px;
+                font-size: 0.9rem;
+            }
+            nav a:hover {
+                color: white;
+            }
 
-<a href="/exit" class="exit-btn">✕ Exit Site</a>
+            @media (max-width: 768px) {
+                .chart-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
 
-<header>
-    <h1>🛡️ SafeGuard SA — Admin Dashboard</h1>
-    <nav>
-        <a th:href="@{/admin/tips}">Moderate Tips</a>
-        <a th:href="@{/}">Home</a>
-        <a th:href="@{/logout}">Logout</a>
-    </nav>
-</header>
+        <a href="/exit" class="exit-btn">✕ Exit Site</a>
 
-<div class="container">
-    <h2>Overview</h2>
+        <header>
+            <h1>🛡️ SafeGuard SA — Admin Dashboard</h1>
+            <nav>
+                <a th:href="@{/admin/tips}">Moderate Tips</a>
+                <a th:href="@{/}">Home</a>
+                <a th:href="@{/logout}">Logout</a>
+            </nav>
+        </header>
 
-    <!-- Stat Cards -->
-    <div class="stat-grid">
-        <div class="stat-card">
-            <div class="number" th:text="${stats['totalTips']}">0</div>
-            <div class="label">Total Safety Tips</div>
+        <div class="container">
+            <h2>Overview</h2>
+
+            <!-- Stat Cards -->
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="number" th:text="${stats['totalTips']}">0</div>
+                    <div class="label">Total Safety Tips</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="number" th:text="${stats['pendingTips']}">0</div>
+                    <div class="label">Pending Review</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="number" th:text="${stats['approvedTips']}">0</div>
+                    <div class="label">Approved Tips</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="number" th:text="${stats['flaggedTips']}">0</div>
+                    <div class="label">Flagged Tips</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" th:text="${stats['chatQueries']}">0</div>
+                    <div class="label">AI Chat Queries</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="number" th:text="${stats['emergencyTriggers']}">0</div>
+                    <div class="label">Safety Gate Triggers</div>
+                </div>
+            </div>
+
+            <!-- Doughnut + Bar charts side by side -->
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <h3>Tips by Category</h3>
+                    <canvas id="categoryChart" height="260"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Tips by Province</h3>
+                    <canvas id="provinceChart" height="260"></canvas>
+                </div>
+            </div>
+
+            <!-- Monthly trend full width -->
+            <div class="chart-full">
+                <h3>Monthly Trend — Safety Tips &amp; Chat Queries</h3>
+                <canvas id="monthlyChart" height="100"></canvas>
+            </div>
         </div>
-        <div class="stat-card warning">
-            <div class="number" th:text="${stats['pendingTips']}">0</div>
-            <div class="label">Pending Review</div>
-        </div>
-        <div class="stat-card success">
-            <div class="number" th:text="${stats['approvedTips']}">0</div>
-            <div class="label">Approved Tips</div>
-        </div>
-        <div class="stat-card danger">
-            <div class="number" th:text="${stats['flaggedTips']}">0</div>
-            <div class="label">Flagged Tips</div>
-        </div>
-        <div class="stat-card">
-            <div class="number" th:text="${stats['chatQueries']}">0</div>
-            <div class="label">AI Chat Queries</div>
-        </div>
-        <div class="stat-card danger">
-            <div class="number" th:text="${stats['emergencyTriggers']}">0</div>
-            <div class="label">Safety Gate Triggers</div>
-        </div>
-    </div>
 
-    <!-- Doughnut + Bar charts side by side -->
-    <div class="chart-grid">
-        <div class="chart-card">
-            <h3>Tips by Category</h3>
-            <canvas id="categoryChart" height="260"></canvas>
-        </div>
-        <div class="chart-card">
-            <h3>Tips by Province</h3>
-            <canvas id="provinceChart" height="260"></canvas>
-        </div>
-    </div>
+        <!-- Pass Thymeleaf data to JS -->
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            const categoryLabels = /*[[${categoryChart['labels']}]]*/ [];
+            const categoryData = /*[[${categoryChart['data']}]]*/ [];
+            const categoryColors = /*[[${categoryChart['backgroundColors']}]]*/ [];
 
-    <!-- Monthly trend full width -->
-    <div class="chart-full">
-        <h3>Monthly Trend — Safety Tips &amp; Chat Queries</h3>
-        <canvas id="monthlyChart" height="100"></canvas>
-    </div>
-</div>
+            const provinceLabels = /*[[${provinceChart['labels']}]]*/ [];
+            const provinceData = /*[[${provinceChart['data']}]]*/ [];
 
-<!-- Pass Thymeleaf data to JS -->
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    const categoryLabels = /*[[${categoryChart['labels']}]]*/ [];
-    const categoryData   = /*[[${categoryChart['data']}]]*/ [];
-    const categoryColors = /*[[${categoryChart['backgroundColors']}]]*/ [];
+            const monthLabels = /*[[${monthlyChart['labels']}]]*/ [];
+            const tipMonthly = /*[[${monthlyChart['tipData']}]]*/ [];
+            const chatMonthly = /*[[${monthlyChart['chatData']}]]*/ [];
+            /*]]>*/
+        </script>
+        <script th:src="@{/js/dashboard.js}"></script>
 
-    const provinceLabels = /*[[${provinceChart['labels']}]]*/ [];
-    const provinceData   = /*[[${provinceChart['data']}]]*/ [];
-
-    const monthLabels = /*[[${monthlyChart['labels']}]]*/ [];
-    const tipMonthly  = /*[[${monthlyChart['tipData']}]]*/ [];
-    const chatMonthly = /*[[${monthlyChart['chatData']}]]*/ [];
-    /*]]>*/
-</script>
-<script th:src="@{/js/dashboard.js}"></script>
-
-</body>
+    </body>
 </html>
