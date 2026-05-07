@@ -6,100 +6,177 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.13</version>
-        <relativePath/> </parent>
+        <relativePath/>
+    </parent>
+
     <groupId>com.safeguardsa</groupId>
     <artifactId>safeguard-sa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>SafeGuard-SA</name>
     <description>SafeAlert SA Project</description>
-    
+
     <properties>
         <java.version>21</java.version>
-        <spring-ai.version>1.0.0-M6</spring-ai.version>
+        <!-- DISABLED: Uncomment when Member B (Kgomo) sets up Spring AI -->
+        <!-- <spring-ai.version>1.0.0-M6</spring-ai.version> -->
     </properties>
 
     <dependencies>
+
+        <!-- ═══════════════════════════════════════════════════
+             CORE SPRING BOOT — Always active
+             ═══════════════════════════════════════════════════ -->
+
+        <!-- JPA — for H2 (dev) and PostgreSQL (prod) database access -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
+
+        <!-- Spring Security — login, roles, route protection -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+
+        <!-- Thymeleaf — HTML template engine -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+
+        <!-- Thymeleaf + Spring Security integration (th:if="${isAuthenticated()}" etc.) -->
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
 
+        <!-- Spring Web MVC — controllers, REST endpoints -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- Validation — @NotNull, @Size, etc. on form fields -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        
+
+        <!-- Tomcat — provided because NetBeans runs external Tomcat 10.1 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
 
+        <!-- ═══════════════════════════════════════════════════
+             DATABASES
+             ═══════════════════════════════════════════════════ -->
+
+        <!-- H2 — zero-setup in-memory database for development -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- PostgreSQL — production database (Supabase) -->
+        <!-- Safe to keep here — only activates when prod profile is used -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- pgvector — AI vector similarity search for RAG pipeline -->
+        <!-- DISABLED: Needs PostgreSQL + pgvector in production -->
+        <!-- Member D will uncomment this when setting up the prod database -->
+        <!--
+        <dependency>
+            <groupId>com.pgvector</groupId>
+            <artifactId>pgvector</artifactId>
+            <version>0.1.4</version>
+        </dependency>
+        -->
+
+        <!-- ═══════════════════════════════════════════════════
+             AI — DISABLED UNTIL MEMBER B (KGOMO) IS READY
+             ═══════════════════════════════════════════════════ -->
+
+        <!-- Spring AI Gemini starter — connects Spring Boot to Google Gemini -->
+        <!-- DISABLED: Crashes on startup without a real API key            -->
+        <!-- Member B must:                                                  -->
+        <!--   1. Get a free Gemini API key from ai.google.dev               -->
+        <!--   2. Add GEMINI_API_KEY to application.properties               -->
+        <!--   3. Uncomment this dependency                                  -->
+        <!--   4. Uncomment spring-ai.version in <properties> above         -->
+        <!--   5. Uncomment the <dependencyManagement> block below           -->
+        <!--
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-vertex-ai-gemini-spring-boot-starter</artifactId>
+        </dependency>
+        -->
+
+        <!-- ═══════════════════════════════════════════════════
+             EMAIL — DISABLED UNTIL REAL GMAIL CREDENTIALS SET
+             ═══════════════════════════════════════════════════ -->
+
+        <!-- JavaMailSender — area alert notification emails -->
+        <!-- DISABLED: Crashes on startup with dummy Gmail credentials      -->
+        <!-- To enable: add real Gmail + app password to application.properties -->
+        <!--
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        -->
+
+        <!-- ═══════════════════════════════════════════════════
+             DEV TOOLS & UTILITIES
+             ═══════════════════════════════════════════════════ -->
+
+        <!-- DevTools — hot reload during development -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Lombok — removes boilerplate (@Getter, @Setter, @Builder etc.) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- ═══════════════════════════════════════════════════
+             TESTING
+             ═══════════════════════════════════════════════════ -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-vertex-ai-gemini-spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.pgvector</groupId>
-            <artifactId>pgvector</artifactId>
-            <version>0.1.4</version>
-        </dependency>
     </dependencies>
 
+    <!-- ═══════════════════════════════════════════════════════
+         SPRING AI BOM — DISABLED UNTIL MEMBER B IS READY
+         Uncomment this entire block together with the
+         spring-ai-vertex-ai-gemini-spring-boot-starter above
+         ═══════════════════════════════════════════════════════ -->
+    <!--
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -111,9 +188,12 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    -->
 
     <build>
         <plugins>
+
+            <!-- Lombok annotation processor — must be listed here for NetBeans -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -126,6 +206,8 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+
+            <!-- Spring Boot Maven plugin — exclude Lombok from the final WAR -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -138,9 +220,12 @@
                     </excludes>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
+    <!-- Spring Milestones repo — only needed when Spring AI is active -->
+    <!-- Safe to keep here, does not affect the build when AI is disabled -->
     <repositories>
         <repository>
             <id>spring-milestones</id>

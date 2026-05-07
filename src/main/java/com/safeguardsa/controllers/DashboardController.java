@@ -26,6 +26,6 @@ public class DashboardController {
         model.addAttribute("categoryChart", dashboardService.getTipsByCategoryChart());
         model.addAttribute("provinceChart", dashboardService.getTipsByProvinceChart());
         model.addAttribute("monthlyChart", dashboardService.getMonthlyTrendChart());
-        return "dashboard";
+        return "dashboard.html";
     }
 }
