@@ -18,6 +18,8 @@ public class MedicalDataService {
 
     /**
      * Simulates MedQA ingestion process.
+     *
+     * @return
      */
     public IngestionResult ingestMedQAData() {
 
@@ -50,6 +52,8 @@ public class MedicalDataService {
 
     /**
      * Returns current ingestion status.
+     *
+     * @return
      */
     public IngestionStatus getStatus() {
         return new IngestionStatus(
@@ -60,6 +64,11 @@ public class MedicalDataService {
 
     /**
      * Placeholder for manually adding medical entries.
+     *
+     * @param question
+     * @param answer
+     * @param category
+     * @return
      */
     public boolean addEntry(String question, String answer, String category) {
         return question != null && answer != null;
@@ -68,8 +77,8 @@ public class MedicalDataService {
     // ─────────────────────────────────────────────
     // DTO CLASSES
     // ─────────────────────────────────────────────
-
     public static class IngestionResult {
+
         private final boolean success;
         private final String message;
         private final int processed;
@@ -80,12 +89,21 @@ public class MedicalDataService {
             this.processed = processed;
         }
 
-        public boolean isSuccess() { return success; }
-        public String getMessage() { return message; }
-        public int getProcessed() { return processed; }
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public int getProcessed() {
+            return processed;
+        }
     }
 
     public static class IngestionStatus {
+
         private final String status;
         private final int processed;
 
@@ -94,7 +112,12 @@ public class MedicalDataService {
             this.processed = processed;
         }
 
-        public String getStatus() { return status; }
-        public int getProcessed() { return processed; }
+        public String getStatus() {
+            return status;
+        }
+
+        public int getProcessed() {
+            return processed;
+        }
     }
 }

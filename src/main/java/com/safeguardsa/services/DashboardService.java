@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package com.safeguardsa.services;
 
 import com.safeguardsa.ejbs.StatsEJB;
@@ -10,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
 /**
  * DashboardService — converts raw repository data into Chart.js-ready
  * label/value structures for the admin dashboard.
@@ -23,7 +19,6 @@ public class DashboardService {
     // ---------------------------------------------------------------
     // STAT CARDS
     // ---------------------------------------------------------------
-
     public Map<String, Long> getStatCards() {
         Map<String, Long> stats = new LinkedHashMap<>();
         stats.put("totalTips", statsEJB.getTotalTips());
@@ -38,7 +33,6 @@ public class DashboardService {
     // ---------------------------------------------------------------
     // CHART: Tips by Category — Doughnut chart
     // ---------------------------------------------------------------
-
     public Map<String, Object> getTipsByCategoryChart() {
         List<Object[]> rows = statsEJB.getTipsByCategory();
         List<String> labels = new ArrayList<>();
@@ -53,11 +47,11 @@ public class DashboardService {
         chart.put("labels", labels);
         chart.put("data", data);
         chart.put("backgroundColors", List.of(
-            "#e74c3c", // CRIME — red
-            "#8e44ad", // ASSAULT — darkred/purple
-            "#e67e22", // THEFT — orange
-            "#f1c40f", // SUSPICIOUS — gold
-            "#95a5a6"  // OTHER — grey
+                "#e74c3c", // CRIME — red
+                "#8e44ad", // ASSAULT — darkred/purple
+                "#e67e22", // THEFT — orange
+                "#f1c40f", // SUSPICIOUS — gold
+                "#95a5a6" // OTHER — grey
         ));
         return chart;
     }
@@ -65,7 +59,6 @@ public class DashboardService {
     // ---------------------------------------------------------------
     // CHART: Tips by Province — Bar chart
     // ---------------------------------------------------------------
-
     public Map<String, Object> getTipsByProvinceChart() {
         List<Object[]> rows = statsEJB.getTipsByProvince();
         List<String> labels = new ArrayList<>();
@@ -86,9 +79,8 @@ public class DashboardService {
     // ---------------------------------------------------------------
     // CHART: Monthly trend — Line chart (Tips + Chat queries)
     // ---------------------------------------------------------------
-
     public Map<String, Object> getMonthlyTrendChart() {
-        String[] monthNames = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+        String[] monthNames = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
         // Build zero-filled arrays for all 12 months
         long[] tipCounts = new long[12];
@@ -113,8 +105,9 @@ public class DashboardService {
 
     private List<Long> toList(long[] arr) {
         List<Long> list = new ArrayList<>();
-        for (long v : arr) list.add(v);
+        for (long v : arr) {
+            list.add(v);
+        }
         return list;
     }
 }
-

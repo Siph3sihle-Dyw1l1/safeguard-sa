@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package com.safeguardsa.ejbs;
 
 import com.safeguardsa.repositories.ChatMessageRepository;
@@ -14,11 +13,12 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 /**
  *
- * @author ntsak
- * StatsEJB — aggregates statistics across both modules for the admin dashboard.
- * Results are cached for 60 seconds to prevent heavy repeated queries.
+ * @author ntsak StatsEJB — aggregates statistics across both modules for the
+ * admin dashboard. Results are cached for 60 seconds to prevent heavy repeated
+ * queries.
  */
 @Component
 public class StatsEJB {
@@ -114,7 +114,9 @@ public class StatsEJB {
         return (List<Object[]>) cache.get("chatByMonth");
     }
 
-    /** Force a cache refresh — call after approving/flagging a tip */
+    /**
+     * Force a cache refresh — call after approving/flagging a tip
+     */
     public void invalidateCache() {
         cacheExpiry = LocalDateTime.MIN;
     }

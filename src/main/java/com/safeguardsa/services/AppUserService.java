@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Service layer for AppUser management.
- * Implements UserDetailsService so Spring Security can use it for login.
+ * Service layer for AppUser management. Implements UserDetailsService so Spring
+ * Security can use it for login.
  *
  * @author SafeGuardSA
  */
@@ -33,12 +33,11 @@ public class AppUserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(
-                        "User not found with username: " + username));
+                "User not found with username: " + username));
 
         return new User(
                 user.getUsername(),
@@ -46,7 +45,6 @@ public class AppUserService implements UserDetailsService {
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
         );
     }
-
 
     public AppUser registerUser(String username, String password, String email) {
         if (userRepository.existsByUsername(username)) {
@@ -65,33 +63,27 @@ public class AppUserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-
     public AppUser registerAdmin(String username, String password, String email) {
         AppUser admin = registerUser(username, password, email);
         admin.setRole("ADMIN");
         return userRepository.save(admin);
     }
 
-
     public Optional<AppUser> findById(Long id) {
         return userRepository.findById(id);
     }
-
 
     public Optional<AppUser> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-
     public List<AppUser> getAllUsers() {
         return userRepository.findAll();
     }
 
-
     public List<AppUser> getUsersByRole(String role) {
         return userRepository.findByRole(role);
     }
-
 
     public AppUser changePassword(Long userId, String newPassword) {
         AppUser user = userRepository.findById(userId)
@@ -101,7 +93,6 @@ public class AppUserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-
     public AppUser updateRole(Long userId, String newRole) {
         AppUser user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
@@ -110,7 +101,6 @@ public class AppUserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-
     public void deleteUser(Long userId) {
         if (!userRepository.existsById(userId)) {
             throw new IllegalArgumentException("Cannot delete — user not found with ID: " + userId);
@@ -118,11 +108,9 @@ public class AppUserService implements UserDetailsService {
         userRepository.deleteById(userId);
     }
 
-
     public boolean isUsernameTaken(String username) {
         return userRepository.existsByUsername(username);
     }
-
 
     public boolean isEmailTaken(String email) {
         return userRepository.existsByEmail(email);

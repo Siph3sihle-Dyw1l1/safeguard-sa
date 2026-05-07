@@ -12,7 +12,9 @@ import java.util.List;
 public interface SafetyTipRepository extends JpaRepository<SafetyTip, Long> {
 
     List<SafetyTip> findByProvince(String province);
+
     List<SafetyTip> findByCategory(String category);
+
     List<SafetyTip> findByStatus(String status);
 
     // FIX: Added for Leaflet.js map integration 

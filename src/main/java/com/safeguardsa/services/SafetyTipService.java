@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.regex.Pattern;
 
+/**
+ *
+ * @author sphes
+ */
 @Service
 public class SafetyTipService {
 
@@ -17,6 +21,7 @@ public class SafetyTipService {
     private static final Pattern EMAIL_PATTERN = Pattern.compile("[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}");
 
     private static final Map<String, double[]> CITY_COORDS = new HashMap<>();
+
     static {
         CITY_COORDS.put("johannesburg", new double[]{-26.2041, 28.0473});
         CITY_COORDS.put("pretoria", new double[]{-25.7461, 28.1881});
@@ -26,29 +31,29 @@ public class SafetyTipService {
     }
 
     public void submitTip(String province, String city, String streetArea, String category, String description, String timeOfDay) {
-    validateDescription(description);
-    
-    // This returns an array: e.g., [-26.2041, 28.0473]
-    double[] coords = resolveCoordinates(province, city);
+        validateDescription(description);
 
-    SafetyTip tip = new SafetyTip();
-    tip.setProvince(province);
-    tip.setCity(city);
-    tip.setStreetArea(streetArea);
-    tip.setCategory(category);
-    tip.setDescription(description);
-    tip.setTimeOfDay(timeOfDay);
-    
-    // ✅ FIXED: Add to extract the Latitude value
-    tip.setLatitude(coords[0]);  
-    
-    // ✅ FIXED: Ensure this also stays as [1] for Longitude
-    tip.setLongitude(coords[1]); 
-    
-    tip.setStatus("PENDING"); 
+        // This returns an array: e.g., [-26.2041, 28.0473]
+        double[] coords = resolveCoordinates(province, city);
 
-    safetyTipRepository.save(tip);
-}
+        SafetyTip tip = new SafetyTip();
+        tip.setProvince(province);
+        tip.setCity(city);
+        tip.setStreetArea(streetArea);
+        tip.setCategory(category);
+        tip.setDescription(description);
+        tip.setTimeOfDay(timeOfDay);
+
+        // ✅ FIXED: Add to extract the Latitude value
+        tip.setLatitude(coords[0]);
+
+        // ✅ FIXED: Ensure this also stays as [1] for Longitude
+        tip.setLongitude(coords[1]);
+
+        tip.setStatus("PENDING");
+
+        safetyTipRepository.save(tip);
+    }
 
     private void validateDescription(String description) {
         if (description == null || description.trim().length() < 10) {
@@ -66,7 +71,15 @@ public class SafetyTipService {
         return new double[]{-28.4793, 24.6727}; // SA Center fallback
     }
 
-    public List<String> getAllProvinces() { return Arrays.asList("Gauteng", "Western Cape", "KwaZulu-Natal", "Eastern Cape", "Free State", "Limpopo", "Mpumalanga", "North West", "Northern Cape"); }
-    public List<String> getAllCategories() { return Arrays.asList("CRIME", "ASSAULT", "THEFT", "SUSPICIOUS", "OTHER"); }
-    public List<String> getTimesOfDay() { return Arrays.asList("Morning", "Afternoon", "Evening", "Night"); }
+    public List<String> getAllProvinces() {
+        return Arrays.asList("Gauteng", "Western Cape", "KwaZulu-Natal", "Eastern Cape", "Free State", "Limpopo", "Mpumalanga", "North West", "Northern Cape");
+    }
+
+    public List<String> getAllCategories() {
+        return Arrays.asList("CRIME", "ASSAULT", "THEFT", "SUSPICIOUS", "OTHER");
+    }
+
+    public List<String> getTimesOfDay() {
+        return Arrays.asList("Morning", "Afternoon", "Evening", "Night");
+    }
 }

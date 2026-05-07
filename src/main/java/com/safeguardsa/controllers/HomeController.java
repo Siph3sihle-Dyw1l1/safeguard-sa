@@ -12,7 +12,7 @@ public class HomeController {
     public String home() {
         return "index.html";
     }
-
+    
     //LOGIN — Spring Security posts to /login , this just serves the page
     @GetMapping("/login")
     public String login() {

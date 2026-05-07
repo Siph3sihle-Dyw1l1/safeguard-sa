@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package com.safeguardsa.models;
 
 import jakarta.persistence.*;
+
 /**
  *
  * @author ntsak
@@ -28,16 +28,35 @@ public class TipCategory {
     private String description;
 
     // --- Getters and Setters ---
+    public Long getId() {
+        return id;
+    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getName() {
+        return name;
+    }
 
-    public String getPinColour() { return pinColour; }
-    public void setPinColour(String pinColour) { this.pinColour = pinColour; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getPinColour() {
+        return pinColour;
+    }
+
+    public void setPinColour(String pinColour) {
+        this.pinColour = pinColour;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
