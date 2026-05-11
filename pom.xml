@@ -88,7 +88,13 @@
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-vertex-ai-gemini-spring-boot-starter</artifactId>
         </dependency>
-
+        <!--Replace the above with the following
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-googleai-spring-boot-starter</artifactId>
+        </dependency>
+        but its going to cause some dependency issue but we will fix everything Saturday 
+        -->
         <!-- TOMCAT -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

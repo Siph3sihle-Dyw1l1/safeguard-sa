@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package com.safeguardsa.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
 /**
  *
  * @author ntsak
@@ -41,22 +41,51 @@ public class ChatMessage {
     }
 
     // --- Getters and Setters ---
+    public Long getId() {
+        return id;
+    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public ChatSession getSession() { return session; }
-    public void setSession(ChatSession session) { this.session = session; }
+    public ChatSession getSession() {
+        return session;
+    }
 
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    public void setSession(ChatSession session) {
+        this.session = session;
+    }
 
-    public String getContent() { return content; }
-    public void setContent(String content) { this.content = content; }
+    public String getRole() {
+        return role;
+    }
 
-    public boolean isEmergency() { return isEmergency; }
-    public void setEmergency(boolean emergency) { isEmergency = emergency; }
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public boolean isEmergency() {
+        return isEmergency;
+    }
+
+    public void setEmergency(boolean emergency) {
+        isEmergency = emergency;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

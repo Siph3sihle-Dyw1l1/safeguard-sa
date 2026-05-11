@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package com.safeguardsa.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
 /**
  *
  * @author ntsak
@@ -40,19 +40,43 @@ public class ChatSession {
     }
 
     // --- Getters and Setters ---
+    public Long getId() {
+        return id;
+    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getSessionToken() { return sessionToken; }
-    public void setSessionToken(String sessionToken) { this.sessionToken = sessionToken; }
+    public String getSessionToken() {
+        return sessionToken;
+    }
 
-    public AppUser getUser() { return user; }
-    public void setUser(AppUser user) { this.user = user; }
+    public void setSessionToken(String sessionToken) {
+        this.sessionToken = sessionToken;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public AppUser getUser() {
+        return user;
+    }
 
-    public LocalDateTime getLastActiveAt() { return lastActiveAt; }
-    public void setLastActiveAt(LocalDateTime lastActiveAt) { this.lastActiveAt = lastActiveAt; }
+    public void setUser(AppUser user) {
+        this.user = user;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getLastActiveAt() {
+        return lastActiveAt;
+    }
+
+    public void setLastActiveAt(LocalDateTime lastActiveAt) {
+        this.lastActiveAt = lastActiveAt;
+    }
 }

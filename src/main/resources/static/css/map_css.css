@@ -1,0 +1,224 @@
+/* 
+    Created on : 07 May 2026, 13:12:20
+    Author     : S DYWILI
+*/
+
+/* SafeGuard SA — Global Stylesheet 
+    Accommodates map.html and tip-form.html
+*/
+:root {
+    --primary-color: #1a2a6c; /* Navy Blue */
+    --secondary-color: #f4f7f6; /* Light Grey/White */
+    --accent-red: #d32f2f; /* Emergency Red */
+    --accent-orange: #f57c00;
+    --text-dark: #333;
+    --border-radius: 8px;
+    --shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--secondary-color);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* --- Navigation & Header --- */
+header {
+    background: var(--primary-color);
+    color: white;
+    padding: 1.5rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header h1 {
+    font-size: 1.5rem;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: #cbd5e0;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: white;
+}
+
+/* --- Exit Button (Panic Button) --- */
+.exit-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    background-color: var(--accent-red);
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    z-index: 9999; /* Ensure it's above everything */
+    box-shadow: var(--shadow);
+    transition: transform 0.2s;
+}
+
+.exit-btn:hover {
+    transform: scale(1.05);
+    background-color: #b71c1c;
+}
+
+/* --- Map Layout (map.html) --- */
+.map-wrapper {
+    display: flex;
+    height: 80vh; /* Takes most of the screen */
+    margin: 20px;
+    gap: 20px;
+}
+
+#map {
+    flex-grow: 1;
+    border-radius: var(--border-radius);
+    border: 2px solid #ddd;
+    z-index: 1; /* Keep below dropdowns if necessary */
+    height: 600px; /* Essential: The map will not show without a height */
+    width: 100%;
+}
+
+
+.filter-panel {
+    width: 300px;
+    background: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.filter-panel h2 {
+    font-size: 1.2rem;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 10px;
+}
+
+/* --- Forms & Controls --- */
+label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: -5px;
+}
+
+select, input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #2a3b8c;
+}
+
+#resetFilters {
+    background-color: #6c757d;
+}
+
+/* --- Legend --- */
+.legend {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.legend h3 {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.legend p {
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* --- Submission Form (tip-form.html) --- */
+main {
+    max-width: 700px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+main h2 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Custom SVG Map Pin Fix for Leaflet.js */
+.custom-map-pin {
+    background: transparent !important;
+    border: none !important;
+}
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .map-wrapper {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .filter-panel {
+        width: 100%;
+    }
+
+    #map {
+        height: 400px;
+    }
+
+    main {
+        margin: 20px;
+    }
+}

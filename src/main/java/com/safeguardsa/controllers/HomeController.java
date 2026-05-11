@@ -12,22 +12,10 @@ public class HomeController {
     public String home() {
         return "index.html";
     }
-
+    
     //LOGIN — Spring Security posts to /login , this just serves the page
     @GetMapping("/login")
     public String login() {
         return "login.html"; // templates/login.html
-    }
-
-    // ADMIN TIPS — protected by SecurityConfig (.hasRole("ADMIN"))
-    @GetMapping("/admin/tips")
-    public String adminTips() {
-        return "admin-tips.html"; // templates/admin-tips.html
-    }
-
-    // TEMP: Remove this when Member C creates SafetyMapController.java
-    @GetMapping("/map")
-    public String mapTemp() {
-        return "placeholder.html"; // templates/placeholder.html
     }
 }

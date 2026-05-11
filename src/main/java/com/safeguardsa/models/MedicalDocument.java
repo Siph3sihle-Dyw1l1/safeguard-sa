@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package com.safeguardsa.models;
 
 import jakarta.persistence.*;
+
 /**
  *
  * @author ntsak
@@ -32,19 +32,43 @@ public class MedicalDocument {
     private String embedding;
 
     // --- Getters and Setters ---
+    public Long getId() {
+        return id;
+    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public String getTitle() {
+        return title;
+    }
 
-    public String getContent() { return content; }
-    public void setContent(String content) { this.content = content; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public String getSource() { return source; }
-    public void setSource(String source) { this.source = source; }
+    public String getContent() {
+        return content;
+    }
 
-    public String getEmbedding() { return embedding; }
-    public void setEmbedding(String embedding) { this.embedding = embedding; }
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getEmbedding() {
+        return embedding;
+    }
+
+    public void setEmbedding(String embedding) {
+        this.embedding = embedding;
+    }
 }

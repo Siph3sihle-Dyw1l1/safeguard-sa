@@ -1,5 +1,3 @@
-
-
 package com.safeguardsa.repositories;
 
 import com.safeguardsa.models.MedicalDocument;
@@ -9,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 /**
  *
  * @author ntsak

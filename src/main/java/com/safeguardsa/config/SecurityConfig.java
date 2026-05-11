@@ -1,24 +1,28 @@
 package com.safeguardsa.config;
 
+import com.safeguardsa.services.AppUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.core.userdetails.User;           // ADDED THIS
-import org.springframework.security.core.userdetails.UserDetails;    // ADDED THIS
-import org.springframework.security.core.userdetails.UserDetailsService; // ADDED THIS
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager; // ADDED THIS
 
+/**
+ *
+ * @author S DYWILI
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private AppUserService appUserService;   // your DB-backed UserDetailsService
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .userDetailsService(appUserService)
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/static/**", "/css/**", "/js/**",
@@ -50,25 +54,4 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // ← no deprecation warning
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        UserDetails user1 = User.builder()
-                .username("doctor1")
-                .password(encoder.encode("SafeGuard2026"))
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User.builder()
-                .username("admin1")
-                .password(encoder.encode("***REMOVED***"))
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(user1, admin);
-    }
 }

@@ -17,6 +17,8 @@ public class AdminController {
 
     /**
      * Trigger ingestion (placeholder for now).
+     *
+     * @return
      */
     @PostMapping("/ingest")
     public ResponseEntity<Map<String, Object>> triggerIngestion() {
@@ -30,6 +32,8 @@ public class AdminController {
 
     /**
      * Check ingestion status (placeholder).
+     *
+     * @return
      */
     @GetMapping("/ingest/status")
     public ResponseEntity<Map<String, Object>> getStatus() {
@@ -42,6 +46,9 @@ public class AdminController {
 
     /**
      * Add entry manually (placeholder).
+     *
+     * @param request
+     * @return
      */
     @PostMapping("/medical/add")
     public ResponseEntity<Map<String, Object>> addMedicalEntry(
