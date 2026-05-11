@@ -64,7 +64,8 @@
 - **JPA / Hibernate** – ORM for database entities
 
 ### AI & Data
-- **Google Gemini API (free tier)** – `gemini-1.5-flash` model
+- **Groq Cloud API** – High-speed inference using `llama-3.3-70b-versatile` (or your chosen model)
+- **Spring AI** – Connector for Groq (via OpenAI-compatible API)
 - **MedQA Dataset** – Open‑source medical Q&A (RAG knowledge base)
 - **pgvector** – Vector similarity search extension for PostgreSQL
 
@@ -123,7 +124,7 @@ This project is developed for academic purposes as a student team project.
 
 ## 🙏 Acknowledgements
 
-- [Google Gemini API](https://ai.google.dev) – Free tier for AI model
+- [Groq Cloud](https://console.groq.com) – High-performance AI inference API
 - [MedQA Dataset](https://github.com/jind11/MedQA) – Medical QA corpus
 - [Leaflet.js](https://leafletjs.com) – Open‑source maps
 - [OpenStreetMap](https://openstreetmap.org) – Map tiles
