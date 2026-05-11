@@ -30,17 +30,17 @@
 | 📝 **Anonymous Tip Submission** | Submit incident details – **no name, email, or phone** stored by design |
 | 🏷️ **Province & Category Filters** | Easily filter tips on the map |
 | 🔒 **Admin Moderation** | Review, approve, flag, or delete pending tips |
-| 📧 **Area Alert Emails** | Notify subscribed students when a new tip is approved in their area (Gmail SMTP) |
+| (Comming Soon)📧 **Area Alert Emails** | Notify subscribed students when a new tip is approved in their area (Gmail SMTP) |
 | 🚨 **Fake Exit Button** | One‑click redirect to Google.com – present on every page for user safety |
 
-### Module 2: AI Health Assistant (RAG + Gemini)
+### Module 2: AI Health Assistant (RAG + Groq AI)
 
 | Feature | Description |
 |---------|-------------|
-| 🤖 **Gemini 1.5‑Flash Integration** | Free tier (1500 requests/day) via Spring AI |
+| 🤖 **Groq Llama 3 Integration** | High-speed inference using Llama 3.3‑70b (via OpenAI-compatible Spring AI provider) |
 | 📚 **RAG with MedQA** | Vector similarity search (pgvector) over medical question‑answer dataset |
-| ⚡ **Safety Gate** | Scans for emergency keywords (bleeding, unconscious, chest pain, suicide, overdose…) – **never calls Gemini** on emergencies |
-| 📖 **Source Citations** | AI response includes references to the MedQA chunks used |
+| ⚡ **Safety Gate** | Scans for emergency keywords (bleeding, chest pain,overdose, etc.) – blocks AI calls during critical events |
+| 📖 **Source Citations** | AI response includes references to specific MedQA knowledge chunks retrieved from PostgreSQL |
 | 🧑‍⚕️ **Medical Disclaimer** | Permanent disclaimer: *“Always consult a doctor”* |
 | 🆘 **Emergency Redirect** | Safety gate triggers a dedicated page with helpline numbers (10111, 112, poison helpline, suicide crisis line) |
 | 📜 **Chat History** | Optional user login to save conversation history |
@@ -59,7 +59,7 @@
 
 ### Backend
 - **Java Spring Boot 3** – Main application framework
-- **Spring AI** – Connector to Google Gemini
+- **Spring AI** – Connector to Groq
 - **Spring Security** – Role‑based access (USER / ADMIN)
 - **JPA / Hibernate** – ORM for database entities
 
@@ -84,7 +84,7 @@
 - **Tomcat 10.1** – Embedded (Spring Boot) or external
 
 ### Development Environment
-- **NetBeans 18+** (Jakarta EE bundle)
+- **NetBeans 21+** (Jakarta EE bundle)
 - **Maven** – Dependency management
 
 ---
