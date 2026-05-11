@@ -5,7 +5,7 @@
 ![Java](https://img.shields.io/badge/Java-21-red)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
 ![Spring AI](https://img.shields.io/badge/Spring%20AI-1.0--M1-blue)
-![Google Gemini](https://img.shields.io/badge/Google%20Gemini-1.5--Flash-orange)
+![Groq](https://img.shields.io/badge/Groq-Llama%203-orange)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-pgvector-336791)
 ![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED)
 ![Google Cloud](https://img.shields.io/badge/Google%20Cloud-Deployed-4285F4)
