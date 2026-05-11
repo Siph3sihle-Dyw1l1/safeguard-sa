@@ -18,6 +18,7 @@
                 --bot-bubble: #f1f5f9;
                 --text: #134e4a;
                 --muted: #6b7280;
+                --emergency-red: #b91c1c;
             }
 
             html, body {
@@ -27,76 +28,125 @@
                 background: var(--bg);
             }
 
-            .exit-btn {
-                position: fixed;
-                top: 14px;
-                right: 14px;
-                background: #dc2626;
-                color: white;
-                padding: 8px 18px;
-                border-radius: 6px;
-                font-weight: 700;
-                font-size: 13px;
-                text-decoration: none;
-                z-index: 9999;
-            }
-
             .app {
+                position: relative;
                 display: flex;
                 flex-direction: column;
                 height: 100vh;
-                max-width: 860px;
+                max-width: 1150px;
                 margin: 0 auto;
                 background: white;
-                box-shadow: 0 0 40px rgba(0,0,0,0.05);
+                box-shadow: 0 0 60px rgba(0,0,0,0.05);
             }
 
+            /* --- UNIFIED SOLID HEADER (From the new design) --- */
             .chat-header {
-                background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+                background: var(--primary);
                 color: white;
-                padding: 1rem 1.5rem;
+                height: 80px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                padding: 0 2.5rem;
             }
 
             .chat-header h1 {
-                font-size: 1.1rem;
+                font-size: 1.5rem;
                 margin: 0;
+                font-weight: 600;
                 display: flex;
                 align-items: center;
-                gap: 0.75rem;
+                gap: 12px;
             }
 
-            .logo-icon {
-                width: 34px;
-                height: 34px;
-                background: rgba(255,255,255,0.2);
-                border-radius: 8px;
+            .header-right {
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                gap: 20px;
             }
 
-            .emergency-link {
+            /* --- NAV BUTTONS (From the new design) --- */
+            .chat-nav {
+                display: flex;
+                gap: 12px;
+            }
+
+            .chat-nav a {
                 color: white;
-                background: rgba(255,255,255,0.15);
-                padding: 0.4rem 0.9rem;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 0.95rem;
+                padding: 8px 16px;
+                border-radius: 6px;
+                border: 1px solid transparent;
+                transition: all 0.3s ease;
+                display: inline-block;
+            }
+
+            .chat-nav a:hover {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                color: white;
+                transform: translateY(-1px);
+            }
+
+            /* --- EMERGENCY BUTTON (From the new design) --- */
+            .emergency-btn {
+                border: 1.5px solid #ef4444;
+                color: #ef4444 !important;
+                background: white;
+                padding: 8px 20px;
                 border-radius: 8px;
                 text-decoration: none;
-                font-size: 0.85rem;
+                font-weight: 700;
+                font-size: 0.95rem;
                 display: flex;
                 align-items: center;
-                gap: 0.4rem;
+                gap: 8px;
+                transition: all 0.2s ease;
+                cursor: pointer;
+                margin-left: 10px;
             }
 
+            .emergency-btn:hover {
+                background: #fef2f2;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(185, 28, 28, 0.1);
+            }
+
+            /* --- EXIT BUTTON (Bottom corner) --- */
+            .exit-btn {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                color: #94a3b8;
+                text-decoration: none;
+                font-size: 0.8rem;
+                font-weight: 600;
+                padding: 6px 12px;
+                border: 1px solid #e2e8f0;
+                border-radius: 6px;
+                background: white;
+                z-index: 1000;
+                transition: all 0.2s ease;
+            }
+
+            .exit-btn:hover {
+                color: var(--emergency-red);
+                border-color: var(--emergency-red);
+                background: #fff1f2;
+            }
+
+            /* ========================================================
+               RESTORED ORIGINAL CHAT FUNCTIONALITY AND AVATARS
+               ======================================================== */
             .messages {
                 flex: 1;
                 overflow-y: auto;
-                padding: 1.25rem;
+                padding: 2rem;
                 display: flex;
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.5rem;
             }
 
             .message {
@@ -110,13 +160,20 @@
                 flex-direction: row-reverse;
             }
 
+            .message.bot {
+                align-self: flex-start;
+            }
+
+            /* Restored Avatar CSS */
             .avatar {
-                width: 34px;
-                height: 34px;
+                width: 38px;
+                height: 38px;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                font-size: 1.1rem;
+                flex-shrink: 0; /* Prevents avatar from getting squished */
             }
 
             .message.user .avatar {
@@ -134,7 +191,7 @@
                 padding: 0.875rem 1.1rem;
                 border-radius: 18px;
                 line-height: 1.5;
-                font-size: 0.9rem;
+                font-size: 1rem;
             }
 
             .message.user .bubble {
@@ -145,19 +202,29 @@
             .message.bot .bubble {
                 background: var(--bot-bubble);
                 color: var(--text);
+                border: 1px solid var(--border);
+            }
+            /* ======================================================== */
+
+            .disclaimer {
+                text-align: center;
+                font-size: 0.9rem;
+                color: #64748b;
+                padding-bottom: 10px;
             }
 
             .input-area {
-                padding: 1rem;
-                border-top: 1px solid var(--border);
+                padding: 1rem 3rem 2rem 3rem;
+                background: white;
             }
 
             .input-row {
                 display: flex;
-                gap: 10px;
+                align-items: center;
+                gap: 15px;
                 border: 2px solid var(--border);
-                border-radius: 12px;
-                padding: 8px 12px;
+                border-radius: 16px;
+                padding: 14px 22px;
             }
 
             textarea {
@@ -165,39 +232,56 @@
                 border: none;
                 outline: none;
                 resize: none;
+                font-size: 1.1rem;
+                height: 28px;
             }
 
             .send-btn {
-                width: 38px;
-                height: 38px;
                 background: var(--primary);
-                border: none;
-                border-radius: 10px;
                 color: white;
+                border: none;
+                width: 48px;
+                height: 48px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: transform 0.2s;
+            }
+
+            .send-btn:hover {
+                background: var(--primary-dark);
+                transform: scale(1.1);
             }
         </style>
     </head>
     <body>
 
-        <a th:href="@{https://www.google.com}" class="exit-btn">✕ Exit</a>
-
         <div class="app">
             <header class="chat-header">
                 <h1>
-                    <span class="logo-icon"><i class="bi bi-heart-pulse"></i></span>
-                    SafeGuard Health Assistant
+                    <i class="bi bi-heart-pulse-fill"></i> SafeGuard Health Assistant
                 </h1>
-                <a th:href="@{/emergency}" class="emergency-link">
-                    <i class="bi bi-exclamation-triangle-fill"></i>
-                    Emergency
-                </a>
+                <div class="header-right">
+                    <nav class="chat-nav">
+                        <a th:href="@{/}">Home</a>
+                        <a th:href="@{/map}">Safety Map</a>
+                        <a th:href="@{/tip}">Report Tip</a>
+                    </nav>
+                    <a th:href="@{/emergency}" class="emergency-btn">
+                        <i class="bi bi-exclamation-triangle-fill"></i> Emergency
+                    </a>
+                </div>
             </header>
 
             <div class="messages" id="messages"></div>
 
+            <div class="disclaimer">Always consult a healthcare professional.</div>
+
             <div class="input-area">
                 <div class="input-row">
-                    <textarea id="input" placeholder="Type your question..."></textarea>
+                    <textarea id="input" placeholder="Type a health question..."></textarea>
                     <button class="send-btn" onclick="send()">
                         <i class="bi bi-send-fill"></i>
                     </button>
@@ -205,7 +289,10 @@
             </div>
         </div>
 
+        <a th:href="@{https://www.google.com}" class="exit-btn">✕ Exit Chat</a>
+
         <script>
+            // RESTORED ORIGINAL JAVASCRIPT WITH AVATARS
             function addMessage(text, type) {
                 const messages = document.getElementById('messages');
                 const div = document.createElement('div');
@@ -227,19 +314,30 @@
                 addMessage(text, 'user');
                 input.value = '';
 
-                const res = await fetch('/chat/ask', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({message: text})
-                });
-
-                const data = await res.json();
-                if (data.emergency) {
-                    window.location.href = "/emergency?category=" + data.category;
-                    return;
+                try {
+                    const res = await fetch('/chat/ask', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({message: text})
+                    });
+                    const data = await res.json();
+                    if (data.emergency) {
+                        window.location.href = "/emergency?category=" + data.category;
+                        return;
+                    }
+                    addMessage(data.response || "No response received.", 'bot');
+                } catch (err) {
+                    addMessage("Connection error.", 'bot');
                 }
-                addMessage(data.response || "No response", 'bot');
             }
+
+            // Allow sending with Enter key for better UX
+            document.getElementById('input').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    send();
+                }
+            });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     </body>
