@@ -37,7 +37,7 @@ public class ChatController {
      */
     @GetMapping("/chat")
     public String chatPage() {
-        return "forward:/chat.html";
+        return "chat.html";
     }
 
     /**
@@ -113,7 +113,8 @@ public class ChatController {
 
     /**
      * Health check endpoint.
-     * @return 
+     *
+     * @return
      */
     @GetMapping("/chat/health")
     @ResponseBody

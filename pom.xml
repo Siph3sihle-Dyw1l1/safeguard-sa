@@ -22,7 +22,7 @@
 
     <properties>
         <java.version>21</java.version>
-        <spring-ai.version>1.0.0-M6</spring-ai.version>
+        <spring-ai.version>1.1.5</spring-ai.version>
     </properties>
 
     <dependencyManagement>
@@ -83,18 +83,17 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- AI (Spring AI ENABLED) -->
+        <!-- AI (Spring AI ENABLED) 
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-vertex-ai-gemini-spring-boot-starter</artifactId>
-        </dependency>
-        <!--Replace the above with the following
+        </dependency>-->
+        
         <dependency>
             <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-googleai-spring-boot-starter</artifactId>
+            <artifactId>spring-ai-starter-model-openai</artifactId>
         </dependency>
-        but its going to cause some dependency issue but we will fix everything Saturday 
-        -->
+        
         <!-- TOMCAT -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
