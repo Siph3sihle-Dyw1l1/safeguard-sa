@@ -38,15 +38,39 @@
             }
             .exit-btn {
                 position: fixed;
-                bottom:  20px;
-                right: 12px;
-                background: #c0392b;
-                color: white;
-                padding: 10px 18px;
-                border-radius: 4px;
-                font-weight: bold;
-                z-index: 9999;
+                bottom: 25px;
+                right: 25px;
+                color: #94a3b8;
+                background: white;
                 text-decoration: none;
+                font-size: 0.85rem;
+                font-weight: 600;
+                padding: 8px 16px;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+                transition: all 0.2s ease;
+            }
+
+            .exit-btn:hover {
+                color: #ef4444;
+                border-color: #ef4444;
+                background: #fff1f2;
+                transform: translateY(-2px);
+            }
+
+            /* --- EXIT BUTTON CYBER MODE --- */
+            html.dark .exit-btn {
+                background: #1e2a45;
+                border-color: rgba(239, 68, 68, 0.4);
+                color: #ef4444;
+            }
+
+            html.dark .exit-btn:hover {
+                background: rgba(239, 68, 68, 0.15);
+                border-color: #ef4444;
+                box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
             }
             .container {
                 max-width: 1200px;
@@ -136,11 +160,47 @@
                     grid-template-columns: 1fr;
                 }
             }
+
+            /* --- CYBER DARK MODE OVERRIDES --- */
+            html.dark body, html.dark .container {
+                background: #0a1525;
+                color: #e8eeff;
+            }
+            html.dark header {
+                background: #0a1525;
+                border-bottom: 1px solid #00bfff;
+            }
+            html.dark h2, html.dark h3 {
+                color: #00bfff;
+            }
+            html.dark .stat-card, html.dark .chart-card, html.dark .chart-full, html.dark .filter-bar, html.dark .table-wrap {
+                background: #1e2a45;
+                border: 1px solid rgba(0,191,255,0.3);
+                color: white;
+            }
+            html.dark thead {
+                background: #0a1525;
+                border-bottom: 1px solid #00bfff;
+            }
+            html.dark td {
+                color: #e8eeff;
+                border-bottom: 1px solid #2e4070;
+            }
+            html.dark tr:hover td {
+                background: rgba(0,191,255,0.1);
+            }
         </style>
+
+        <!--Dark mode -->
+        <script>
+            if (localStorage.getItem('safeguard-theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+        </script>
     </head>
     <body>
 
-        <!<!--  <a href="/exit" class="exit-btn">✕ Exit Site</a>-->
+        <a href="https://www.google.com" class="exit-btn">✕ Exit Dashboard</a>
 
         <header>
             <h1>🛡️ SafeGuard SA — Admin Dashboard</h1>

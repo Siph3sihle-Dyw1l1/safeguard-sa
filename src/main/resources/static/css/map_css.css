@@ -222,3 +222,37 @@ form {
         margin: 20px;
     }
 }
+
+/* --- CYBER DARK MODE OVERRIDES --- */
+html.dark body {
+    --primary-color: #00bfff;
+    --secondary-color: #0a1525;
+    --text-dark: #e8eeff;
+    --shadow: 0 0 15px rgba(0,191,255,0.15);
+}
+html.dark header {
+    background: #0a1525;
+    border-bottom: 1px solid rgba(0,191,255,0.3);
+}
+html.dark main, html.dark .filter-panel, html.dark .legend, html.dark select, html.dark input, html.dark textarea {
+    background: #1e2a45;
+    color: #e8eeff;
+    border-color: rgba(0,191,255,0.3);
+}
+html.dark .filter-panel h2, html.dark main h2 {
+    color: #00bfff;
+    border-bottom-color: rgba(0,191,255,0.3);
+}
+
+/* --- EXIT BUTTON CYBER MODE --- */
+html.dark .exit-btn {
+    background: #1e2a45;
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+}
+
+html.dark .exit-btn:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: #ef4444;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
