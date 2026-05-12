@@ -1,0 +1,5 @@
+target/*.war.original
+*.md
+.git
+.gitignore
+src/test
