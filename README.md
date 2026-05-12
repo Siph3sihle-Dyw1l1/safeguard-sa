@@ -15,8 +15,13 @@
 ---
 
 ## 📌 Live Demo
-
-> Coming soon – deployed on **Google Cloud Run** with **Docker** containerization.
+<div align="center">
+  <a href="https://safeguard-sa.onrender.com">
+    <img src="src\main\resources\static\images\landing_page.png"" alt="Car Secure App Interface" width="600"/>
+  </a>
+  <br/>
+  <em>AI-Powered Healthcare Chatbot combined with SafeAlert for Crime Prevention</em>
+</div>
 
 ---
 
