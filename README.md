@@ -16,8 +16,11 @@
 
 ## 📌 Live Demo
 
-> Coming soon – deployed on **Google Cloud Run** with **Docker** containerization.
-
+<div align="center">
+  <img src="src\main\resources\static\images\landing_page.png"" alt="Car Secure App Interface" width="600"/>
+  <br/>
+  <em>Next-generation vehicle protection powered by facial recognition</em>
+</div>
 ---
 
 ## ✨ Features
