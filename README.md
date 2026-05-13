@@ -99,7 +99,7 @@
 
 | Activity | Description | Responsible |
 |----------|-------------|-------------|
-| Hallucination testing | 50+ Gemini queries to verify RAG accuracy | Team Member E |
+| Hallucination testing | 50+ Groq queries to verify RAG accuracy | Team Member E |
 | Safety Gate validation | Emergency keyword detection + redirect | Team Member B |
 | Moderation workflow | Approve/flag/delete – end‑to‑end | Team Member C & E |
 | Responsive UI | Test on desktop, tablet, mobile | All |
@@ -108,8 +108,8 @@
 
 | Role | Member | Focus Areas |
 |------|--------|-------------|
-| **Architect** | [S DYWILI](https://github.com/Siph3sihle-Dyw1l1) | Spring Boot skeleton, Security, Deployment (Docker + GCP) |
-| **AI Medic** | [MJ KGOMO](https://github.com/mapk6-apl) | Gemini API, Safety Gate, RAG pipeline, MedQA ingestion |
+| **Architect** | [S DYWILI](https://github.com/Siph3sihle-Dyw1l1) | Spring Boot skeleton, Security, Deployment (Docker + Render) |
+| **AI Medic** | [MJ KGOMO](https://github.com/mapk6-apl) | Groq Llama 3 API, Safety Gate, RAG pipeline, MedQA ingestion |
 | **Map Specialist** | [KC MASHA](https://github.com/codedbykabelo)  | Leaflet.js, tip submission, geocoding, filters |
 | **Data & Stats** | [N CHUMA](https://github.com/chums-glitch) | PostgreSQL + pgvector, repositories, dashboard charts |
 | **Security & QA** | [T PALE](https://github.com/Tshephang497) | Spring Security, login, hallucination tests, JUnit |
@@ -119,9 +119,9 @@
 | Phase | Weeks | Deliverables |
 |-------|-------|--------------|
 | **Skeleton** | 1–2 | GitHub repo, Spring Boot runs on Tomcat, H2 connected |
-| **Brains** | 3–4 | Basic Gemini response, static map, MedQA chunking starts |
+| **Brains** | 3–4 | Basic Groq response, static map, MedQA chunking starts |
 | **Features** | 5–6 | RAG pipeline, tip submission → map pins, Safety Gate, admin login |
-| **Polish & Deploy** | 7–8 | Dashboard completed, Docker + GCP deployment, final report |
+| **Polish & Deploy** | 7–8 | Dashboard completed, Docker + Render deployment, final report |
 
 ## 📄 License
 
