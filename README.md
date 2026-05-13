@@ -8,7 +8,7 @@
 ![Groq](https://img.shields.io/badge/Groq-Llama%203-orange)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-pgvector-336791)
 ![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED)
-![Google Cloud](https://img.shields.io/badge/Google%20Cloud-Deployed-4285F4)
+![Render](https://img.shields.io/badge/Render-Deployed-46E3B7)
 
 > One platform. Two modules. Five team members. Built for student safety and well‑being.
 
@@ -17,11 +17,13 @@
 ## 📌 Live Demo
 <div align="center">
   <a href="https://safeguard-sa.onrender.com">
-    <img src="src\main\resources\static\images\landing_page.png"" alt="Car Secure App Interface" width="600"/>
+    <img src="src/main/resources/static/images/landing_page.png" alt="SafeGuard SA Interface" width="600"/>
   </a>
   <br/>
   <em>AI-Powered Healthcare Chatbot combined with SafeAlert for Crime Prevention</em>
 </div>
+
+> 🚀 **Live and fully deployed on Render with Docker containerization!** > **Access the platform here:** [https://safeguard-sa.onrender.com](https://safeguard-sa.onrender.com)
 
 ---
 
@@ -35,7 +37,7 @@
 | 📝 **Anonymous Tip Submission** | Submit incident details – **no name, email, or phone** stored by design |
 | 🏷️ **Province & Category Filters** | Easily filter tips on the map |
 | 🔒 **Admin Moderation** | Review, approve, flag, or delete pending tips |
-| (Comming Soon)📧 **Area Alert Emails** | Notify subscribed students when a new tip is approved in their area (Gmail SMTP) |
+| (Coming Soon) 📧 **Area Alert Emails** | Notify subscribed students when a new tip is approved in their area (Gmail SMTP) |
 | 🚨 **Fake Exit Button** | One‑click redirect to Google.com – present on every page for user safety |
 
 ### Module 2: AI Health Assistant (RAG + Groq AI)
@@ -44,7 +46,7 @@
 |---------|-------------|
 | 🤖 **Groq Llama 3 Integration** | High-speed inference using Llama 3.3‑70b (via OpenAI-compatible Spring AI provider) |
 | 📚 **RAG with MedQA** | Vector similarity search (pgvector) over medical question‑answer dataset |
-| ⚡ **Safety Gate** | Scans for emergency keywords (bleeding, chest pain,overdose, etc.) – blocks AI calls during critical events |
+| ⚡ **Safety Gate** | Scans for emergency keywords (bleeding, chest pain, overdose, etc.) – blocks AI calls during critical events |
 | 📖 **Source Citations** | AI response includes references to specific MedQA knowledge chunks retrieved from PostgreSQL |
 | 🧑‍⚕️ **Medical Disclaimer** | Permanent disclaimer: *“Always consult a doctor”* |
 | 🆘 **Emergency Redirect** | Safety gate triggers a dedicated page with helpline numbers (10111, 112, poison helpline, suicide crisis line) |
@@ -85,7 +87,7 @@
 
 ### Deployment & Containerization
 - **Docker** – Containerized application
-- **Google Cloud Run** – Serverless deployment (or Google Compute Engine)
+- **Render** – Cloud application hosting and deployment
 - **Tomcat 10.1** – Embedded (Spring Boot) or external
 
 ### Development Environment
@@ -95,6 +97,7 @@
 ---
 
 ## 📁 Project Structure
+
 ## 🧪 Testing & Quality Assurance
 
 | Activity | Description | Responsible |
