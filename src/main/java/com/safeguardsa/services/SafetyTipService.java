@@ -15,12 +15,11 @@ import java.util.regex.Pattern;
 public class SafetyTipService {
 
     @Autowired
-    private SafetyTipRepository safetyTipRepository; // Added repository injection 
+    private SafetyTipRepository safetyTipRepository;
 
     private static final Pattern PHONE_PATTERN = Pattern.compile("(\\+27|0)[6-8][0-9]{8}");
     private static final Pattern EMAIL_PATTERN = Pattern.compile("[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}");
 
-    // ✅ NOTICE: The hardcoded CITY_COORDS map has been completely removed!
     public void submitTip(String province, String city, String streetArea, String category, String description, String timeOfDay, Double latitude, Double longitude) {
         validateDescription(description);
 
@@ -32,12 +31,11 @@ public class SafetyTipService {
         tip.setDescription(description);
         tip.setTimeOfDay(timeOfDay);
 
-        // ✅ FIXED: Use the exact coordinates passed from the frontend map search
         if (latitude != null && longitude != null) {
             tip.setLatitude(latitude);
             tip.setLongitude(longitude);
         } else {
-            // Fallback just in case the search fails or the user submits without clicking a suggestion
+
             tip.setLatitude(-28.4793);
             tip.setLongitude(24.6727);
         }
@@ -56,7 +54,6 @@ public class SafetyTipService {
         }
     }
 
-    // ✅ NOTICE: The resolveCoordinates() method was deleted because we don't need to guess anymore!
     public List<String> getAllProvinces() {
         return Arrays.asList("Gauteng", "Western Cape", "KwaZulu-Natal", "Eastern Cape", "Free State", "Limpopo", "Mpumalanga", "North West", "Northern Cape");
     }

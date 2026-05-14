@@ -12,12 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.Map;
 
-/**
- * SafetyMapController — Member C Serves the public student safety map at /map.
- * GET /map — renders map.html with province + category filter options GET
- * /map/tips — REST endpoint called by map.js via fetch(), returns approved tips
- * as JSON
- */
 @Controller
 @RequestMapping("/map")
 public class SafetyMapController {
@@ -25,10 +19,7 @@ public class SafetyMapController {
     @Autowired
     private SafetyMapService safetyMapService;
 
-    /**
-     * GET /map Renders the public safety map page (map.html).Passes province
-     * and category lists to populate the filter dropdowns.
-     *
+    /*
      * @param model
      * @return
      */
@@ -39,22 +30,16 @@ public class SafetyMapController {
         return "map";
     }
 
-    /**
-     * GET /map/tips Called by Leaflet.js in map.js via
-     * fetch('/map/tips').Returns all APPROVED safety tips as JSON with
-     * coordinates and metadata.
-     *
+    /*
      * @return
      */
-    /**
-     * GET /map/tips Calls the service to fetch approved pins for Leaflet.js
-     *
+ /*
      * @return
      */
     @GetMapping("/tips")
     @ResponseBody
     public List<Map<String, Object>> getApprovedTips() {
-        // We use the service here, NOT the repository directly
+
         return safetyMapService.getApprovedTipsForMap();
     }
 }

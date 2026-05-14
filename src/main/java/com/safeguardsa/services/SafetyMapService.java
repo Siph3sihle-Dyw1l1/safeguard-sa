@@ -1,7 +1,7 @@
 package com.safeguardsa.services;
 
 import com.safeguardsa.models.SafetyTip;
-import com.safeguardsa.repositories.SafetyTipRepository; // IMPORT THIS
+import com.safeguardsa.repositories.SafetyTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class SafetyMapService {
 
     @Autowired
-    private SafetyTipRepository safetyTipRepository; // DECLARE THIS
+    private SafetyTipRepository safetyTipRepository; 
 
     public List<Map<String, Object>> getApprovedTipsForMap() {
         // Fetch only approved tips with coordinates from the database

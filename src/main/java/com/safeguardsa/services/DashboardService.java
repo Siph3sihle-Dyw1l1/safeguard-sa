@@ -6,10 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-/**
- * DashboardService — converts raw repository data into Chart.js-ready
- * label/value structures for the admin dashboard.
- */
 @Service
 public class DashboardService {
 

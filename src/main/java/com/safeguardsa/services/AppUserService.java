@@ -15,10 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Service layer for AppUser management. Implements UserDetailsService so Spring
- * Security can use it for login.
- *
+/*
  * @author SafeGuardSA
  */
 @Service
@@ -58,7 +55,6 @@ public class AppUserService implements UserDetailsService {
         user.setUsername(username);
         user.setPasswordHash(passwordEncoder.encode(password));
         user.setEmail(email);
-        // role defaults to "USER" via @PrePersist — no need to set it here
 
         return userRepository.save(user);
     }

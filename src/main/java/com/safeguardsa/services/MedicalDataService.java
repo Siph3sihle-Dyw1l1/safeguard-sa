@@ -16,9 +16,7 @@ public class MedicalDataService {
     private final AtomicBoolean isIngesting = new AtomicBoolean(false);
     private final AtomicInteger processed = new AtomicInteger(0);
 
-    /**
-     * Simulates MedQA ingestion process.
-     *
+    /*
      * @return
      */
     public IngestionResult ingestMedQAData() {

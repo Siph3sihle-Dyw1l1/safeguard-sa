@@ -29,7 +29,6 @@ public class StatsEJB {
     @Autowired
     private ChatMessageRepository chatMessageRepository;
 
-    // Simple in-memory cache
     private Map<String, Object> cache = new HashMap<>();
     private LocalDateTime cacheExpiry = LocalDateTime.MIN;
     private static final int CACHE_SECONDS = 60;
@@ -114,9 +113,6 @@ public class StatsEJB {
         return (List<Object[]>) cache.get("chatByMonth");
     }
 
-    /**
-     * Force a cache refresh — call after approving/flagging a tip
-     */
     public void invalidateCache() {
         cacheExpiry = LocalDateTime.MIN;
     }

@@ -30,14 +30,13 @@ public class ChatService {
             ChatMessageRepository chatMessageRepository,
             ChatSessionRepository chatSessionRepository,
             ObjectMapper objectMapper,
-            ChatClient.Builder chatClientBuilder) { // ✅ Fixed: Uses Builder
+            ChatClient.Builder chatClientBuilder) {
 
         this.safetyGateService = safetyGateService;
         this.chatMessageRepository = chatMessageRepository;
         this.chatSessionRepository = chatSessionRepository;
         this.objectMapper = objectMapper;
 
-        // ✅ Fixed: Builds the ChatClient correctly
         this.chatClient = chatClientBuilder
                 .defaultSystem("You are the SafeGuard SA AI Medic. Provide calm, concise, and professional first-aid advice to students.")
                 .build();

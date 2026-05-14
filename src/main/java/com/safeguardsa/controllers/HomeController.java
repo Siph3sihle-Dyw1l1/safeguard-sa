@@ -13,9 +13,9 @@ public class HomeController {
         return "index.html";
     }
     
-    //LOGIN — Spring Security posts to /login , this just serves the page
+   
     @GetMapping("/login")
     public String login() {
-        return "login.html"; // templates/login.html
+        return "login.html"; 
     }
 }

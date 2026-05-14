@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * AdminController - Admin endpoints for MedQA data management.
  *
  * @author mmaphutijkgomo
  */
@@ -15,8 +14,7 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdminController {
 
-    /**
-     * Trigger ingestion (placeholder for now).
+    /*
      *
      * @return
      */
@@ -31,7 +29,6 @@ public class AdminController {
     }
 
     /**
-     * Check ingestion status (placeholder).
      *
      * @return
      */
@@ -45,7 +42,6 @@ public class AdminController {
     }
 
     /**
-     * Add entry manually (placeholder).
      *
      * @param request
      * @return

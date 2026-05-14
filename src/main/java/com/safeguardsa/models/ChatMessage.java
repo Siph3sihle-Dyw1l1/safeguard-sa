@@ -24,7 +24,7 @@ public class ChatMessage {
     private ChatSession session;
 
     @Column(nullable = false)
-    private String role; // USER or BOT
+    private String role; 
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -40,7 +40,7 @@ public class ChatMessage {
         this.createdAt = LocalDateTime.now();
     }
 
-    // --- Getters and Setters ---
+    
     public Long getId() {
         return id;
     }

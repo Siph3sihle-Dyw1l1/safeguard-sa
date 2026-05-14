@@ -9,12 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * EmergencyController - Serves the Safety Gate emergency page.
- *
- * GET /emergency → displays emergency numbers based on category. Always
- * publicly accessible — no authentication required. No AI-generated content
- * ever appears on this page.
+/*
  *
  * @author mmaphutijkgomo
  */

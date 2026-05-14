@@ -16,8 +16,6 @@ public class DataSeeder {
     CommandLineRunner seedAdmin(AppUserService appUserService) {
         return args -> {
 
-            // Only creates admin1 if it doesn't already exist
-            // Safe to run on every restart — no duplicate errors
             if (!appUserService.isUsernameTaken("admin1")) {
                 appUserService.registerAdmin(
                         "admin1",

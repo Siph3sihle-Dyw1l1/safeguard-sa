@@ -13,10 +13,6 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * ChatController - Handles AI health chatbot endpoints.
- *
- * GET /chat → serves chat.html POST /chat/ask → processes health question
- * through Safety Gate + RAG + Gemini
  *
  * @author mmaphutijkgomo
  */
@@ -30,8 +26,7 @@ public class ChatController {
         this.chatService = chatService;
     }
 
-    /**
-     * Serves the chatbot UI page.
+    /*
      *
      * @return
      */
@@ -40,12 +35,7 @@ public class ChatController {
         return "chat.html";
     }
 
-    /**
-     * Processes a student health question.Request: { "message": "What are
-     * symptoms of dehydration?" } Response: { "emergency": false, "response":
-     * "...", "sources": [...] } or Response: { "emergency": true, "category":
-     * "...", "title": "...", "emergencyMessage": "...", "contacts": [...] }
-     *
+    /*
      * @param body
      * @param httpSession
      * @return
@@ -72,7 +62,6 @@ public class ChatController {
             return ResponseEntity.badRequest().body(response);
         }
 
-        // Get or create anonymous session token
         String sessionToken = (String) httpSession.getAttribute("sessionToken");
         if (sessionToken == null) {
             sessionToken = UUID.randomUUID().toString();
@@ -111,8 +100,7 @@ public class ChatController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Health check endpoint.
+    /*
      *
      * @return
      */
