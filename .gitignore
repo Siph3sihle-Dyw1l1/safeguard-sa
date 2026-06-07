@@ -25,3 +25,5 @@ replay_pid*
 /target/
 
 env.properties
+# Added by ggshield
+.cache_ggshield
